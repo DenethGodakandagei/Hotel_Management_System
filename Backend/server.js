@@ -4,6 +4,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import connectDB from './config/dbConfig.js';
 import authRoutes from './Routes/authRoutes.js'
+import roomRoutes from './Routes/roomRoutes.js'
 
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/room',roomRoutes)
 
 const PORT = process.env.PORT || 5000;
 
