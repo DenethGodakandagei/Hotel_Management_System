@@ -86,13 +86,17 @@ function NavBar() {
                   </a>
                 </li>
                 <li className="pb-6 text-xl  text-orange-700 py-2 md:px-6 text-center border-b-2 md:border-b-0">
-                  <a href="#" >
+                  
+                    <Link to='/signin'>
                     Signin
-                  </a>
+                    </Link>
+                  
                 </li>
                 <li className="pb-6 text-xl  text-white py-2 md:px-6 text-center border-b-2 md:border-b-0">
                   <a href="#" className="bg-orange-600 p-1 rounded-md">
+                  <Link to='/signup'>
                     Signup
+                    </Link>
                   </a>
                 </li>
               </ul>
