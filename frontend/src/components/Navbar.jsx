@@ -1,11 +1,26 @@
 "use client";
 
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import logo from "../assets/logo.svg"
 
 function NavBar() {
   const [navbar, setNavbar] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Get user data from localStorage
+    const userData = JSON.parse(localStorage.getItem("user"));
+    if (userData) {
+      setUser(userData);
+    }
+  }, []);
+  const handleLogout = () => {
+    // Clear token and user data
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+  };
   return (
     <div>
       <nav className="w-full  bg-[#fdfbf9]  top-0 left-0 right-0 z-10">
@@ -85,20 +100,31 @@ function NavBar() {
                     Contact
                   </a>
                 </li>
+                {!user ? (
+              <>
+                  <li className="pb-6 text-xl  text-orange-700 py-2 md:px-6 text-center border-b-2 md:border-b-0">
+                  <Link to="/signin" className="block md:inline">Signin</Link>
+                </li>
                 <li className="pb-6 text-xl  text-orange-700 py-2 md:px-6 text-center border-b-2 md:border-b-0">
-                  
-                    <Link to='/signin'>
-                    Signin
-                    </Link>
-                  
-                </li>
-                <li className="pb-6 text-xl  text-white py-2 md:px-6 text-center border-b-2 md:border-b-0">
-                  <a href="#" className="bg-orange-600 p-1 rounded-md">
-                  <Link to='/signup'>
+                  <Link
+                    to="/signup"
+                    className="block md:inline bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700"
+                  >
                     Signup
-                    </Link>
-                  </a>
+                  </Link>
                 </li>
+              </>
+            ) : (
+              <div className="flex items-center space-x-4">
+                <span className="text-xl text-orange-700">Hello, {user.name}</span>
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
               </ul>
             </div>
           </div>
