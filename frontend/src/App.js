@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import ProtectedRoute from './Utils/ProtectedRoute';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AdminDashboard from './components/Admin/AdminDashboard';
+import ManageRooms from './components/Admin/RoomManage/ManageRooms';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             path="/admin/dashboard"
             element={<ProtectedRoute element={<AdminDashboard />} />}
           />
+             <Route path="/managerooms" element={<ManageRooms />} />
         </Routes>
       </BrowserRouter>
     </div>
