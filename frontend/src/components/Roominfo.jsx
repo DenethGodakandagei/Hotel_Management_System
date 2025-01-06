@@ -1,20 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Calendar, momentLocalizer } from "react-big-calendar";
-
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 // Set up moment localizer
 const localizer = momentLocalizer(moment);
 
 const Roominfo = () => {
-    const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
   const location = useLocation();
   const { room } = location.state;
   const [events, setEvents] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [checkInDate, setCheckInDate] = useState(null);
+  const [checkOutDate, setCheckOutDate] = useState(null);
+
+  useEffect(() => {
+    // Get user data from localStorage
+    const userData = JSON.parse(localStorage.getItem("user"));
+    if (userData) {
+      setUser(userData);
+    }
+  }, []);
 
   useEffect(() => {
     // Fetch reservation data from the backend
@@ -60,6 +71,65 @@ const Roominfo = () => {
       prevIndex === 0 ? room.images.length - 1 : prevIndex - 1
     );
   };
+
+  // Function to handle the reservation
+  const handleBookNow = async () => {
+    if (!user) {
+      alert("Please log in to make a reservation.");
+      return;
+    }
+  
+    if (!checkInDate || !checkOutDate) {
+      alert("Please select both check-in and check-out dates.");
+      return;
+    }
+  
+    // Check for overlap with existing reservations
+    const isOverlapping = events.some((event) => {
+      const existingCheckIn = new Date(event.start);
+      const existingCheckOut = new Date(event.end);
+  
+      // Check if the selected dates overlap with any existing reservation
+      return (
+        (checkInDate >= existingCheckIn && checkInDate < existingCheckOut) ||
+        (checkOutDate > existingCheckIn && checkOutDate <= existingCheckOut) ||
+        (checkInDate <= existingCheckIn && checkOutDate >= existingCheckOut)
+      );
+    });
+  
+    if (isOverlapping) {
+      alert("The selected dates overlap with an existing reservation. Please choose different dates.");
+      return;
+    }
+  
+    const reservationData = {
+      email: user.email,
+      roomId: room._id,
+      checkInDate: checkInDate.toISOString(), // Convert to ISO format
+      checkOutDate: checkOutDate.toISOString(), // Convert to ISO format
+    };
+  
+    try {
+      const response = await axios.post("http://localhost:5000/api/reservations", reservationData);
+      if (response.status === 201) {
+        alert("Reservation created successfully!");
+        // Optionally, update events after a successful booking
+        setEvents((prevEvents) => [
+          ...prevEvents,
+          {
+            title: "Booked",
+            start: new Date(reservationData.checkInDate),
+            end: new Date(reservationData.checkOutDate),
+            status: "Booked",
+          },
+        ]);
+      }
+    } catch (error) {
+      console.error("Error creating reservation:", error);
+      alert("Error creating reservation.");
+    }
+  };
+  
 
   return (
     <div className="w-screen min-h-screen bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 flex items-center justify-center px-6 py-12">
@@ -149,41 +219,53 @@ const Roominfo = () => {
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="mt-8 flex justify-between items-center space-x-6">
-              <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 text-sm font-medium px-6 py-3 rounded-lg transition-all duration-200 ease-in-out">
-                Back to Rooms
-              </button>
-              <button className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium px-6 py-3 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                Book Now
-              </button>
+            {/* Date Pickers for Check-in and Check-out */}
+            <div className="mb-6">
+              <div className="flex gap-4">
+                <div>
+                  <label className="block text-gray-700">Check-in Date:</label>
+                  <DatePicker
+                    selected={checkInDate}
+                    onChange={(date) => setCheckInDate(date)}
+                    minDate={currentDate} // Disable past dates
+                    className="mt-2 p-2 border border-gray-300 rounded-md"
+                    placeholderText="Select check-in date"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700">Check-out Date:</label>
+                  <DatePicker
+                    selected={checkOutDate}
+                    onChange={(date) => setCheckOutDate(date)}
+                    minDate={checkInDate} // Ensure check-out date is after check-in date
+                    className="mt-2 p-2 border border-gray-300 rounded-md"
+                    placeholderText="Select check-out date"
+                  />
+                </div>
+              </div>
             </div>
+
+            {/* Book Now Button */}
+            <button
+              className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-600 transition-all duration-300"
+              onClick={handleBookNow}
+            >
+              Book Now
+            </button>
           </div>
         </div>
 
-        {/* Right Section: Reservation Calendar */}
-        <div className="flex flex-col space-y-6">
-          <div className="w-full p-2 rounded-lg shadow-lg bg-orange-100">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Booked Dates:</h3>
-            <Calendar
-              localizer={localizer}
-              events={events}
-              startAccessor="start"
-              endAccessor="end"
-              style={{ height: 300 }}
-              min={currentDate} // Disable past dates
-              dayPropGetter={dayPropGetter} // Hide past dates visually
-              onSelectEvent={(event) => alert(`Reservation: ${event.title}`)} // Just show the title on click
-              eventPropGetter={(event) => ({
-                style: {
-                  backgroundColor: event.status === "Booked" ? "#ff4d4d" : "#4caf50",
-                  color: "white",
-                  borderRadius: "5px",
-                  padding: "5px",
-                },
-              })}
-            />
-          </div>
+        {/* Right Section: Calendar */}
+        <div className="w-full">
+          <Calendar
+            localizer={localizer}
+            events={events}
+            startAccessor="start"
+            endAccessor="end"
+            style={{ height: 500 }}
+            dayPropGetter={dayPropGetter}
+          />
         </div>
       </div>
     </div>
