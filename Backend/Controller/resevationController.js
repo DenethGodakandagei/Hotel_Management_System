@@ -41,7 +41,16 @@ export const createReservation = async (req, res) => {
       res.status(500).json({ message: "Failed to create reservation.", error: err.message });
     }
   };
-  
+
+  // Controller to get all reservations
+export const getAllReservations = async (req, res) => {
+    try {
+      const reservations = await Reservation.find().populate('roomId'); // Populate roomId to include room details if needed
+      res.status(200).json(reservations);
+    } catch (err) {
+      res.status(500).json({ message: "Failed to retrieve reservations.", error: err.message });
+    }
+  };
 
 // Controller to update an existing reservation
 export const updateReservation = async (req, res) => {
