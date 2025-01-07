@@ -5,7 +5,8 @@ import bodyParser from 'body-parser';
 import connectDB from './config/dbConfig.js';
 import authRoutes from './Routes/authRoutes.js';
 import roomRoutes from './Routes/roomRoutes.js'
-import reservationRoutes from './Routes/resevationRoutes.js'
+import reservationRoutes from './Routes/resevationRoutes.js';
+import paymentRoutes  from './Routes/PaymentRoutes.js'
 
 
 dotenv.config();
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/room',roomRoutes);
 app.use('/api/reservations', reservationRoutes);
+app.use("/api/payments", paymentRoutes);
 
 const PORT = process.env.PORT || 5000;
 

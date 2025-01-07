@@ -6,6 +6,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Payment from "./Admin/Payment/Payment";
 
 // Set up moment localizer
 const localizer = momentLocalizer(moment);
@@ -113,7 +114,7 @@ const Roominfo = () => {
       const response = await axios.post("http://localhost:5000/api/reservations", reservationData);
       if (response.status === 201) {
         alert("Reservation created successfully!");
-        // Optionally, update events after a successful booking
+        //update events after a successful booking
         setEvents((prevEvents) => [
           ...prevEvents,
           {
@@ -219,7 +220,7 @@ const Roominfo = () => {
               </div>
             </div>
 
-            {/* Date Pickers for Check-in and Check-out */}
+            {/* Date Picker */}
             <div className="mb-6">
               <div className="flex gap-4">
                 <div>
@@ -227,7 +228,7 @@ const Roominfo = () => {
                   <DatePicker
                     selected={checkInDate}
                     onChange={(date) => setCheckInDate(date)}
-                    minDate={currentDate} // Disable past dates
+                    minDate={currentDate} 
                     className="mt-2 p-2 border border-gray-300 rounded-md"
                     placeholderText="Select check-in date"
                   />
@@ -238,7 +239,7 @@ const Roominfo = () => {
                   <DatePicker
                     selected={checkOutDate}
                     onChange={(date) => setCheckOutDate(date)}
-                    minDate={checkInDate} // Ensure check-out date is after check-in date
+                    minDate={checkInDate} 
                     className="mt-2 p-2 border border-gray-300 rounded-md"
                     placeholderText="Select check-out date"
                   />
@@ -267,6 +268,7 @@ const Roominfo = () => {
             dayPropGetter={dayPropGetter}
           />
         </div>
+        <Payment />
       </div>
     </div>
   );

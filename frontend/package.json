@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@material-tailwind/react": "^2.1.10",
+    "@stripe/react-stripe-js": "^3.1.1",
+    "@stripe/stripe-js": "^5.4.0",
     "axios": "^1.7.9",
     "cra-template": "1.2.0",
     "jwt-decode": "^4.0.0",
