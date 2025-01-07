@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import axios from "axios";
 
-//  Stripe publishable key
-const stripePromise = loadStripe("pk_test_51QeUmGQP2cLYp48gx46lx8zTLraBQX3wK95fVk3GUUmRESmaki00yUXf9dXVmoRemMVyuifjMzFRtYMo5HAcbCgs00KqTunN9s"); 
+// Load Stripe with publishable key from environment variables
+const stripePromise = loadStripe("pk_test_51QeUmGQP2cLYp48gx46lx8zTLraBQX3wK95fVk3GUUmRESmaki00yUXf9dXVmoRemMVyuifjMzFRtYMo5HAcbCgs00KqTunN9s");
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ reservationData, onPaymentSuccess }) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -19,7 +20,6 @@ const CheckoutForm = () => {
     setError("");
     setSuccess("");
 
-    // Get card details
     const cardElement = elements.getElement(CardElement);
 
     if (!stripe || !elements) {
@@ -28,40 +28,68 @@ const CheckoutForm = () => {
       return;
     }
 
+    if (!reservationData || !reservationData.amount || reservationData.amount <= 0) {
+      setError("Invalid amount. Please try again.");
+      setLoading(false);
+      return;
+    }
+
+    // Log reservationData before sending to the backend
+    console.log("Reservation Data:", reservationData);
+
     try {
-      // Call your backend to create a PaymentIntent
-      const res = await fetch("http://localhost:5000/api/payments/create_payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: 5000, currency: "usd" }), // Adjust amount and currency as needed
-      });
+      // Create PaymentIntent on the server
+      const res = await axios.post(
+        "http://localhost:5000/api/payments/create_payment",
+        { amount: reservationData.amount, currency: "usd" },
+        { headers: { "Content-Type": "application/json" } }
+      );
 
-      const { clientSecret } = await res.json();
+      const { clientSecret } = res.data;
 
-      // Confirm card payment
+      // Log clientSecret received from the backend
+      console.log("Client Secret:", clientSecret);
+
+      // Confirm the payment with Stripe
       const paymentResult = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: cardElement,
         },
       });
 
+      // Log paymentResult to check the response from Stripe
+      console.log("Payment Result:", paymentResult);
+
       if (paymentResult.error) {
         setError(paymentResult.error.message);
       } else if (paymentResult.paymentIntent.status === "succeeded") {
         setSuccess("Payment successful!");
+        await onPaymentSuccess(paymentResult.paymentIntent);
       }
     } catch (err) {
       setError("An error occurred. Please try again.");
+      console.error("Error:", err); // Log the error
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-6  border rounded-lg bg-white shadow-lg">
-      <h2 className="text-2xl font-semibold mb-4">Make a Payment</h2>
+    <form onSubmit={handleSubmit} className="p-6 border rounded-lg bg-white shadow-xl max-w-md mx-auto mt-8">
+      <h2 className="text-2xl font-semibold mb-6 text-center">Complete Your Payment</h2>
+      
+      {/* Reservation Summary */}
+      <div className="mb-6">
+        <h3 className="text-lg font-semibold">Reservation Summary</h3>
+        <p className="text-gray-700">Room Type: {reservationData.roomType}</p>
+        <p className="text-gray-700">Check-in Date: {new Date(reservationData.checkInDate).toLocaleDateString()}</p>
+        <p className="text-gray-700">Check-out Date: {new Date(reservationData.checkOutDate).toLocaleDateString()}</p>
+        <p className="text-gray-700">Total Amount: ${reservationData.amount}</p>
+      </div>
+      
+      {/* Card Element */}
       <CardElement
-        className="p-3 border border-gray-300 rounded-md"
+        className="p-4 border border-gray-300 rounded-md mb-4"
         options={{
           style: {
             base: {
@@ -73,23 +101,49 @@ const CheckoutForm = () => {
           },
         }}
       />
-      {error && <p className="text-red-500 mt-4">{error}</p>}
-      {success && <p className="text-green-500 mt-4">{success}</p>}
-      <button
-        type="submit"
-        className="mt-6 w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 disabled:bg-gray-300"
-        disabled={!stripe || loading}
-      >
-        {loading ? "Processing..." : "Pay $50"}
-      </button>
+      {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
+      {success && <p className="text-green-500 mt-4 text-center">{success}</p>}
+      
+      <div className="flex justify-between items-center mt-4">
+        <button
+          type="submit"
+          className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 disabled:bg-gray-300"
+          disabled={!stripe || loading}
+        >
+          {loading ? "Processing..." : "Pay Now"}
+        </button>
+      </div>
     </form>
   );
 };
 
-const Payment = () => {
+const Payment = ({ reservationData, onPaymentSuccess }) => {
+  // Handle post-payment actions, such as sending the reservation data to the backend
+  const handlePaymentSuccess = async (paymentIntent) => {
+    try {
+      // Send reservation data to the backend after payment success
+      const response = await axios.post("http://localhost:5000/api/reservations", {
+        email: reservationData.email,
+        roomId: reservationData.roomId,
+        checkInDate: reservationData.checkInDate,
+        checkOutDate: reservationData.checkOutDate,
+      });
+
+      if (response.status === 201) {
+        alert("Reservation created successfully!");
+
+        // Optionally, update events or trigger other actions after reservation is created
+        // setEvents((prevEvents) => [...prevEvents, newEvent]); // Example: Update events
+      }
+    } catch (error) {
+      console.error("Error creating reservation:", error);
+      alert("Error creating reservation.");
+    }
+  };
+
   return (
     <Elements stripe={stripePromise}>
-      <CheckoutForm />
+      <CheckoutForm reservationData={reservationData} onPaymentSuccess={handlePaymentSuccess} />
     </Elements>
   );
 };
