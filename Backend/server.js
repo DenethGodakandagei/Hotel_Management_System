@@ -2,11 +2,13 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import connectDB from './config/dbConfig.js';
 import authRoutes from './Routes/authRoutes.js';
 import roomRoutes from './Routes/roomRoutes.js'
 import reservationRoutes from './Routes/resevationRoutes.js';
-import paymentRoutes  from './Routes/PaymentRoutes.js'
+import paymentRoutes  from './Routes/PaymentRoutes.js';
+import { verifyToken } from './Middelware/verifyToken.js';
 
 
 dotenv.config();
@@ -15,8 +17,9 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3000', credentials: true })); 
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(express.json());
 
 // Routes

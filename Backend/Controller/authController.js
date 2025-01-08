@@ -60,6 +60,14 @@ const loginUser = async (req, res) => {
   // Generate a JWT token
   const token = generateToken(user._id, user.role);
 
+  // Set the token as a secure cookie
+  res.cookie("token", token, {
+    httpOnly: true,  // Helps prevent XSS attacks
+    maxAge: 3600000, // 1 hour expiration time for better session management
+    secure: process.env.NODE_ENV === 'production', // Only secure cookies in production
+    sameSite: 'Strict', // Prevent CSRF attacks by ensuring cookies are sent only with same-site requests
+  });
+
   // Respond with the token and user details
   res.json({
     message: 'Login successful',
@@ -73,4 +81,10 @@ const loginUser = async (req, res) => {
   });
 };
 
-export { registerUser, loginUser };
+
+ const getUser = (req, res) => {
+  const user = req.user;
+  res.json({ user });
+};
+
+export { registerUser, loginUser, getUser };

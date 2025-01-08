@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
-
+import { useAuth } from '../context/AuthContext.js';
 
 const Login = () => {
   const [userData, setUserData] = useState({
@@ -12,8 +11,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
-
-
+  const { login } = useAuth();
   const handleChange = (e) => {
     setUserData({
       ...userData,
@@ -26,20 +24,9 @@ const Login = () => {
     try {
       const response = await axios.post("http://localhost:5000/api/auth/login", userData);
   
-      const token = response.data.token;
       const user = response.data.user;
-  
-      // Decode token to check expiration
-      const decodedToken = jwtDecode(token);
-      const currentTime = Date.now() / 1000; // Current time in seconds
-  
-      if (decodedToken.exp < currentTime) {
-        throw new Error("Token has expired.");
-      }
-  
-      // Save token and user info
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+      login(user);
+      
   
       setSuccess("Login successful!");
       setError("");
@@ -48,14 +35,13 @@ const Login = () => {
       if (user.role === "admin") {
         navigate("/admin/dashboard");
       } else {
-        navigate("/dashboard");
+        navigate("/");
       }
     } catch (err) {
       setError(err.response?.data?.message || "Error logging in.");
       setSuccess("");
     }
   };
-  
 
   return (
     <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-lg shadow-md">

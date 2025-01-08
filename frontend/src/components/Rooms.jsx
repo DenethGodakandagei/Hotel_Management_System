@@ -39,8 +39,8 @@ const Rooms = () => {
 
   return (
     <div>
-      <div className="flex w-screen min-h-screen bg-gray-50" id="room">
-        <div className="container mx-auto px-4">
+      <div className="flex w-screen min-h-screen " id="room">
+        <div className=" mx-auto ">
           <div className="w-full text-center mb-8 mt-4">
             <h1 className="text-4xl font-extrabold text-orange-500">
               Explore Our Rooms

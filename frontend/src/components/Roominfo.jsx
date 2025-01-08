@@ -7,54 +7,55 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Payment from "./Admin/Payment/Payment";
+import { useAuth } from '../context/AuthContext';
 
 // Set up moment localizer for calendar
 const localizer = momentLocalizer(moment);
 
+
 const Roominfo = () => {
-  const [user, setUser] = useState(null);
-  const location = useLocation();
-  const { room } = location.state;
+
   const [events, setEvents] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [totalAmount, setTotalAmount] = useState(0);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const { user } = useAuth();
+
+  const location = useLocation();
+  const room = location.state?.room;
+
+  
 
   useEffect(() => {
-    // Fetch user data from localStorage
-    const userData = JSON.parse(localStorage.getItem("user"));
-    if (userData) setUser(userData);
-  }, []);
+    if (room) {
+      const fetchReservations = async () => {
+        try {
+          const response = await axios.get("http://localhost:5000/api/reservations");
+          const data = response.data;
 
-  useEffect(() => {
-    // Fetch reservation data from the backend
-    const fetchReservations = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/reservations");
-        const data = response.data;
+          // Filter reservations for the current room
+          const roomReservations = data
+            .filter((reservation) => reservation.roomId._id === room._id)
+            .map((reservation) => ({
+              title: "Booked",
+              start: new Date(reservation.checkInDate),
+              end: new Date(reservation.checkOutDate),
+              status: reservation.status,
+            }));
 
-        // Filter reservations for the current room
-        const roomReservations = data
-          .filter((reservation) => reservation.roomId._id === room._id)
-          .map((reservation) => ({
-            title: `Booked`,
-            start: new Date(reservation.checkInDate),
-            end: new Date(reservation.checkOutDate),
-            status: reservation.status,
-          }));
+          setEvents(roomReservations);
+        } catch (error) {
+          console.error("Error fetching reservations:", error);
+        }
+      };
 
-        setEvents(roomReservations);
-      } catch (error) {
-        console.error("Error fetching reservations:", error);
-      }
-    };
+      fetchReservations();
+    }
+  }, [room]);
 
-    fetchReservations();
-  }, [room._id]);
-
-  const currentDate = new Date(); // Get current date
+  const currentDate = new Date();
 
   const dayPropGetter = (date) => {
     if (date < currentDate) {
@@ -63,14 +64,13 @@ const Roominfo = () => {
   };
 
   const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % room.images.length);
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % room?.images.length);
   };
 
   const handlePrevImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? room.images.length - 1 : prevIndex - 1));
+    setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? room?.images.length - 1 : prevIndex - 1));
   };
 
-  // Function to handle reservation booking
   const handleBookNow = async () => {
     if (!user) {
       alert("Please log in to make a reservation.");
@@ -99,20 +99,10 @@ const Roominfo = () => {
       return;
     }
 
-    // Prepare reservation data
-    const reservationData = {
-      email: user.email,
-      roomId: room._id,
-      checkInDate: checkInDate.toISOString(),
-      checkOutDate: checkOutDate.toISOString(),
-      amount: totalAmount,
-    };
-
     // Open the payment modal
     setIsPaymentModalOpen(true);
   };
 
-  // Handle payment success
   const handlePaymentSuccess = async (paymentDetails) => {
     try {
       const reservationData = {
@@ -124,10 +114,7 @@ const Roominfo = () => {
       };
 
       // Send reservation data to the backend
-      const response = await axios.post(
-        "http://localhost:5000/api/reservations",
-        reservationData
-      );
+      const response = await axios.post("http://localhost:5000/api/reservations", reservationData);
 
       if (response.status === 201) {
         alert("Reservation created successfully!");
@@ -141,7 +128,7 @@ const Roominfo = () => {
             status: "Booked",
           },
         ]);
-        setIsPaymentModalOpen(false); // Close the payment modal after success
+        setIsPaymentModalOpen(false);
       }
     } catch (error) {
       console.error("Error creating reservation:", error);
@@ -149,7 +136,6 @@ const Roominfo = () => {
     }
   };
 
-  // Calculate total amount based on selected dates
   const calculateTotalAmount = () => {
     if (!checkInDate || !checkOutDate) {
       setTotalAmount(0);
@@ -166,33 +152,22 @@ const Roominfo = () => {
     calculateTotalAmount();
   }, [checkInDate, checkOutDate]);
 
-  // Modal to show payment
   const PaymentModal = ({ isOpen, onClose, reservationData, onPaymentSuccess }) => {
     if (!isOpen) return null;
 
     return (
-      <div
-        className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
-        onClick={onClose}
-      >
-        <div
-          className="bg-white rounded-lg shadow-xl w-full max-w-lg p-6"
-          onClick={(e) => e.stopPropagation()} // Prevent modal close when clicking inside
-        >
-          <button
-            className="absolute top-4 right-4 text-gray-600"
-            onClick={onClose}
-          >
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50" onClick={onClose}>
+        <div className="bg-white rounded-lg shadow-xl w-full max-w-lg p-6" onClick={(e) => e.stopPropagation()}>
+          <button className="absolute top-4 right-4 text-gray-600" onClick={onClose}>
             X
           </button>
-          <Payment
-            reservationData={reservationData}
-            onPaymentSuccess={onPaymentSuccess}
-          />
+          <Payment reservationData={reservationData} onPaymentSuccess={onPaymentSuccess} />
         </div>
       </div>
     );
   };
+
+  if (!room) return <p>Loading room details...</p>;
 
   return (
     <div className="w-screen min-h-screen items-center justify-center px-6 py-12">
@@ -226,7 +201,9 @@ const Roominfo = () => {
           {room.images.map((image, index) => (
             <div
               key={index}
-              className={`cursor-pointer w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden transition-all duration-300 transform ${index === currentImageIndex ? "scale-105 border-4 border-blue-500" : "hover:scale-110"}`}
+              className={`cursor-pointer w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden transition-all duration-300 transform ${
+                index === currentImageIndex ? "scale-105 border-4 border-blue-500" : "hover:scale-110"
+              }`}
               onClick={() => setCurrentImageIndex(index)}
             >
               <img className="w-full h-full object-cover" src={image} alt={`Room Image ${index + 1}`} />
@@ -235,76 +212,80 @@ const Roominfo = () => {
         </div>
       </div>
 
-      <div className="max-w-screen-xl w-full bg-white rounded-lg shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 mx-auto items-center justify-center">
-        {/* Room Details */}
-        <div className="flex flex-col items-center space-y-6">
-          <div className="w-full bg-gray-50 p-6 rounded-lg shadow-lg">
-            <h3 className="text-3xl font-semibold text-gray-800 mb-4">{room.roomType} Room</h3>
-            <p className="text-gray-600">{room.description}</p>
-            <p className="text-gray-600 mt-2">Price per night: ${room.pricePerNight}</p>
-          </div>
+      <div className="max-w-screen-xl w-full bg-white rounded-2xl shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 gap-12 p-8 mx-auto items-center justify-center">
+  {/* Room Details */}
+  <div className="flex flex-col items-start space-y-8">
+    <div className="w-full bg-orange-50 p-8 rounded-2xl shadow-lg">
+      <h3 className="text-4xl font-semibold text-orange-800 mb-4">{room.roomType} Room</h3>
+      <p className="text-gray-700 text-lg mb-4">{room.description}</p>
+      <div className="flex gap-4">
+        <p className="text-xl text-gray-600">Price per night:</p>
+        <p className="text-2xl font-semibold text-orange-600">${room.pricePerNight}</p>
+      </div>
+    </div>
 
-          {/* Date Selection */}
-          <div className="mt-6 w-full">
-            <h4 className="text-xl font-medium">Select Check-in and Check-out Dates</h4>
-            <div className="flex gap-4 mt-2">
-              <div className="w-1/2">
-                <label className="block text-gray-600 mb-1">Check-in Date</label>
-                <DatePicker
-                  selected={checkInDate}
-                  onChange={(date) => setCheckInDate(date)}
-                  selectsStart
-                  startDate={checkInDate}
-                  endDate={checkOutDate}
-                  minDate={new Date()}
-                  className="w-full px-4 py-2 border rounded-md"
-                />
-              </div>
-
-              <div className="w-1/2">
-                <label className="block text-gray-600 mb-1">Check-out Date</label>
-                <DatePicker
-                  selected={checkOutDate}
-                  onChange={(date) => setCheckOutDate(date)}
-                  selectsEnd
-                  startDate={checkInDate}
-                  endDate={checkOutDate}
-                  minDate={checkInDate || new Date()}
-                  className="w-full px-4 py-2 border rounded-md"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Total Amount */}
-          <div className="mt-6">
-            <h4 className="text-xl font-medium">Total Amount: ${totalAmount}</h4>
-          </div>
-
-          {/* Book Now Button */}
-          <div className="mt-6">
-            <button
-              onClick={handleBookNow}
-              className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600"
-            >
-              Book Now
-            </button>
-          </div>
+    {/* Date Selection */}
+    <div className="w-full">
+      <h4 className="text-2xl font-semibold text-orange-800 mb-6">Select Check-in and Check-out Dates</h4>
+      <div className="flex gap-6 mt-4">
+        <div className="w-1/2">
+          <label className="block text-gray-600 text-lg mb-2">Check-in Date</label>
+          <DatePicker
+            selected={checkInDate}
+            onChange={(date) => setCheckInDate(date)}
+            selectsStart
+            startDate={checkInDate}
+            endDate={checkOutDate}
+            minDate={currentDate}
+            dateFormat="yyyy-MM-dd"
+            className="w-full p-4 border border-orange-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:outline-none"
+          />
         </div>
-
-        {/* Calendar */}
-        <div className="w-full">
-          <h4 className="text-xl font-medium text-center mb-4">Room Availability</h4>
-          <Calendar
-            localizer={localizer}
-            events={events}
-            startAccessor="start"
-            endAccessor="end"
-            style={{ height: "400px" }}
-            dayPropGetter={dayPropGetter}
+        <div className="w-1/2">
+          <label className="block text-gray-600 text-lg mb-2">Check-out Date</label>
+          <DatePicker
+            selected={checkOutDate}
+            onChange={(date) => setCheckOutDate(date)}
+            selectsEnd
+            startDate={checkInDate}
+            endDate={checkOutDate}
+            minDate={checkInDate || currentDate}
+            dateFormat="yyyy-MM-dd"
+            className="w-full p-4 border border-orange-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:outline-none"
           />
         </div>
       </div>
+    </div>
+
+    {/* Total Amount */}
+    <div className="w-full mt-6">
+      <h4 className="text-2xl font-semibold text-orange-800 mb-4">Total: <span className="text-xl text-gray-600">${totalAmount}</span></h4>
+      <button
+        className="w-full bg-orange-600 text-white py-4 rounded-xl shadow-md transition ease-in-out duration-300"
+        onClick={handleBookNow}
+      >
+        Book Now
+      </button>
+    </div>
+  </div>
+
+  {/* Calendar */}
+  <div className="w-full bg-white shadow-lg rounded-xl">
+    <h3 className="text-2xl font-semibold text-center mb-6 text-orange-800">Room Availability</h3>
+    <div className="h-full">
+      <Calendar
+        localizer={localizer}
+        events={events}
+        startAccessor="start"
+        endAccessor="end"
+        style={{ height: 500 }}
+        dayPropGetter={dayPropGetter}
+        popup
+      />
+    </div>
+  </div>
+</div>
+
 
       {/* Payment Modal */}
       <PaymentModal

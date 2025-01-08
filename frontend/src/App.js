@@ -9,12 +9,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AdminDashboard from './components/Admin/AdminDashboard';
 import ManageRooms from './components/Admin/RoomManage/ManageRooms';
 import Roominfo from './components/Roominfo';
+import { AuthProvider } from './context/AuthContext';
 
 
 function App() {
   return (
     <div className="App">
-      
+         <AuthProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -33,6 +34,7 @@ function App() {
              <Route path="/managerooms" element={<ManageRooms />} />
         </Routes>
       </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 }

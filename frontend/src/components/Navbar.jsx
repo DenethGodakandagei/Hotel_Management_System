@@ -2,25 +2,16 @@
 
 import { Link } from "react-router-dom";
 import { useState , useEffect } from "react";
-import logo from "../assets/logo.svg"
+import logo from "../assets/logo.svg";
+import { useAuth } from '../context/AuthContext';
 
 function NavBar() {
   const [navbar, setNavbar] = useState(false);
-  const [user, setUser] = useState(null);
+  
+  const { user } = useAuth();
 
-  useEffect(() => {
-    // Get user data from localStorage
-    const userData = JSON.parse(localStorage.getItem("user"));
-    if (userData) {
-      setUser(userData);
-    }
-  }, []);
-  const handleLogout = () => {
-    // Clear token and user data
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null);
-  };
+
+
   return (
     <div>
       <nav className="w-full  bg-[#fdfbf9]  top-0 left-0 right-0 z-10">
@@ -115,14 +106,17 @@ function NavBar() {
                 </li>
               </>
             ) : (
-              <div className="flex items-center space-x-4">
-                <span className="text-xl text-orange-700">Hello, {user.name}</span>
-                <button
-                  onClick={handleLogout}
-                  className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-                >
-                  Logout
-                </button>
+              <div className="">
+             
+                <li className="pb-6 text-xl  text-orange-700 py-2 md:px-6 text-center border-b-2 md:border-b-0">
+                <Link
+                    to="/dashboard"
+                    className="block md:inline bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700"
+                  >
+               {user.name}
+               </Link>
+                </li>
+                
               </div>
             )}
               </ul>

@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../context/AuthContext';
 
 const Dashboard = () => {
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
+  const { user } = useAuth();
   useEffect(() => {
-    // Get the token and user data from localStorage
-    const token = localStorage.getItem("token");
-    const user = JSON.parse(localStorage.getItem("user"));
-
-    // If no token or user data is found, redirect to login page
-    if (!token || !user) {
-      navigate("/login");
+    if (!user) {
+      // Redirect to login if no user is found
+      navigate("/signin");
     } else {
-      // Set the user data in state
+      // Set user data if authenticated
       setUserData(user);
-      setError(""); 
+      setError(""); // Clear any previous errors
     }
-  }, [navigate]);
+  }, [navigate, user]);
 
   return (
     <div className="flex h-screen bg-gray-100">

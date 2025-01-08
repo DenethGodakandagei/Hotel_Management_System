@@ -75,39 +75,64 @@ const CheckoutForm = ({ reservationData, onPaymentSuccess }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-6 border rounded-lg bg-white shadow-xl max-w-md mx-auto mt-8">
-      <h2 className="text-2xl font-semibold mb-6 text-center">Complete Your Payment</h2>
-      
-      {/* Reservation Summary */}
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold">Reservation Summary</h3>
-        <p className="text-gray-700">Room Type: {reservationData.roomType}</p>
-        <p className="text-gray-700">Check-in Date: {new Date(reservationData.checkInDate).toLocaleDateString()}</p>
-        <p className="text-gray-700">Check-out Date: {new Date(reservationData.checkOutDate).toLocaleDateString()}</p>
-        <p className="text-gray-700">Total Amount: ${reservationData.amount}</p>
-      </div>
-      
+    <form onSubmit={handleSubmit} className="p-8 border rounded-lg bg-white shadow-xl max-w-md mx-auto mt-8">
+     <h2 className="text-3xl font-semibold text-center text-orange-500 mb-8">Complete Your Payment</h2>
+
+{/* Reservation Summary */}
+<div className="bg-white shadow-lg p-6 rounded-lg mb-8">
+  <h3 className="text-xl font-semibold text-gray-800 mb-4">Reservation Summary</h3>
+  <div className="space-y-4">
+    {/* Check-in Date */}
+    <div className="flex justify-between items-center">
+      <p className="text-gray-600">Check-in Date:</p>
+      <p className="font-medium text-gray-800">{new Date(reservationData.checkInDate).toLocaleDateString()}</p>
+    </div>
+
+    {/* Check-out Date */}
+    <div className="flex justify-between items-center">
+      <p className="text-gray-600">Check-out Date:</p>
+      <p className="font-medium text-gray-800">{new Date(reservationData.checkOutDate).toLocaleDateString()}</p>
+    </div>
+
+    {/* Total Amount */}
+    <div className="flex justify-between items-center border-t pt-4 mt-4">
+      <p className="text-gray-600">Total Amount:</p>
+      <p className="font-semibold text-xl text-gray-900">${reservationData.amount}</p>
+    </div>
+  </div>
+</div>
+
+
       {/* Card Element */}
-      <CardElement
-        className="p-4 border border-gray-300 rounded-md mb-4"
-        options={{
-          style: {
-            base: {
-              fontSize: "16px",
-              color: "#424770",
-              "::placeholder": { color: "#aab7c4" },
+      <div className="mb-6">
+        <CardElement
+          className="p-4 border border-gray-300 rounded-md shadow-sm focus:outline-none"
+          options={{
+            style: {
+              base: {
+                fontSize: "16px",
+                color: "#424770",
+                "::placeholder": {
+                  color: "#aab7c4",
+                },
+              },
+              invalid: {
+                color: "#9e2146",
+              },
             },
-            invalid: { color: "#9e2146" },
-          },
-        }}
-      />
+          }}
+        />
+      </div>
+
+      {/* Error and Success Messages */}
       {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
       {success && <p className="text-green-500 mt-4 text-center">{success}</p>}
-      
-      <div className="flex justify-between items-center mt-4">
+
+      {/* Payment Button */}
+      <div className="flex justify-center mt-6">
         <button
           type="submit"
-          className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 disabled:bg-gray-300"
+          className="bg-orange-600 text-white py-3 px-6 rounded-lg shadow-md hover:bg-orange-700 focus:ring-2 focus:ring-orange-500 focus:outline-none disabled:bg-gray-300"
           disabled={!stripe || loading}
         >
           {loading ? "Processing..." : "Pay Now"}
@@ -131,9 +156,6 @@ const Payment = ({ reservationData, onPaymentSuccess }) => {
 
       if (response.status === 201) {
         alert("Reservation created successfully!");
-
-        // Optionally, update events or trigger other actions after reservation is created
-        // setEvents((prevEvents) => [...prevEvents, newEvent]); // Example: Update events
       }
     } catch (error) {
       console.error("Error creating reservation:", error);

@@ -1,15 +1,15 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
-import { getToken } from "./auth";
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.js';
 
 const ProtectedRoute = ({ element }) => {
-  const token = getToken();
+  const { user } = useAuth();  // Using the user from AuthContext
 
-  if (!token) {
-    return <Navigate to="/login" />; // Redirect to login if no token
+  if (!user) {
+    return <Navigate to="/signin" />; // Redirect to login if no user found
   }
 
-  return element;
+  return element; // Allow access to protected route
 };
 
 export default ProtectedRoute;
