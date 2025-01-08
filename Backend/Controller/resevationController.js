@@ -105,10 +105,12 @@ export const deleteReservation = async (req, res) => {
       // Logic to mark the room available can be added if needed
     }
 
-    await reservation.remove();
+    // Use findByIdAndDelete to delete the reservation
+    await Reservation.findByIdAndDelete(reservationId);
 
     res.status(200).json({ message: "Reservation deleted successfully." });
   } catch (err) {
     res.status(500).json({ message: "Failed to delete reservation.", error: err.message });
   }
 };
+
