@@ -67,10 +67,11 @@ const ViewRooms = () => {
     <div className="flex h-screen bg-gray-50">
       {/* Room Table */}
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300 shadow-md">
+        <table className="min-w-full rounded-md bg-white border border-gray-300 shadow-md">
           <thead>
             <tr className="bg-orange-200 text-gray-700">
               <th className="p-4">Room Name</th>
+              <th className="p-4">Room No</th>
               <th className="p-4">Price</th>
               <th className="p-4">Image</th>
               <th className="p-4">Actions</th>
@@ -79,6 +80,7 @@ const ViewRooms = () => {
           <tbody>
             {rooms.map((room) => (
               <tr key={room._id} className="border-b">
+                   <td className="p-4">{room.roomType} Room</td>
                 <td className="p-4">{room.roomNumber}</td>
                 <td className="p-4">${room.pricePerNight}</td>
                 <td className="p-4">

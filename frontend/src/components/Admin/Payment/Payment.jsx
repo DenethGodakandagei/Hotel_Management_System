@@ -3,7 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
 
-// Load Stripe with publishable key from environment variables
+// Load Stripe with the publishable key from environment variables
 const stripePromise = loadStripe("pk_test_51QeUmGQP2cLYp48gx46lx8zTLraBQX3wK95fVk3GUUmRESmaki00yUXf9dXVmoRemMVyuifjMzFRtYMo5HAcbCgs00KqTunN9s");
 
 const CheckoutForm = ({ reservationData, onPaymentSuccess }) => {
@@ -38,10 +38,15 @@ const CheckoutForm = ({ reservationData, onPaymentSuccess }) => {
     console.log("Reservation Data:", reservationData);
 
     try {
-      // Create PaymentIntent on the server
+      // Create a payment on the backend
       const res = await axios.post(
-        "http://localhost:5000/api/payments/create_payment",
-        { amount: reservationData.amount, currency: "usd" },
+        "http://localhost:5000/api/payments/create_payment", // Your backend payment route
+        {
+          email: reservationData.email,
+          roomId: reservationData.roomId,
+          amount: reservationData.amount,
+          currency: "usd", // Assuming the currency is USD
+        },
         { headers: { "Content-Type": "application/json" } }
       );
 
@@ -76,32 +81,31 @@ const CheckoutForm = ({ reservationData, onPaymentSuccess }) => {
 
   return (
     <form onSubmit={handleSubmit} className="p-8 border rounded-lg bg-white shadow-xl max-w-md mx-auto mt-8">
-     <h2 className="text-3xl font-semibold text-center text-orange-500 mb-8">Complete Your Payment</h2>
+      <h2 className="text-3xl font-semibold text-center text-orange-500 mb-8">Complete Your Payment</h2>
 
-{/* Reservation Summary */}
-<div className="bg-white shadow-lg p-6 rounded-lg mb-8">
-  <h3 className="text-xl font-semibold text-gray-800 mb-4">Reservation Summary</h3>
-  <div className="space-y-4">
-    {/* Check-in Date */}
-    <div className="flex justify-between items-center">
-      <p className="text-gray-600">Check-in Date:</p>
-      <p className="font-medium text-gray-800">{new Date(reservationData.checkInDate).toLocaleDateString()}</p>
-    </div>
+      {/* Reservation Summary */}
+      <div className="bg-white shadow-lg p-6 rounded-lg mb-8">
+        <h3 className="text-xl font-semibold text-gray-800 mb-4">Reservation Summary</h3>
+        <div className="space-y-4">
+          {/* Check-in Date */}
+          <div className="flex justify-between items-center">
+            <p className="text-gray-600">Check-in Date:</p>
+            <p className="font-medium text-gray-800">{new Date(reservationData.checkInDate).toLocaleDateString()}</p>
+          </div>
 
-    {/* Check-out Date */}
-    <div className="flex justify-between items-center">
-      <p className="text-gray-600">Check-out Date:</p>
-      <p className="font-medium text-gray-800">{new Date(reservationData.checkOutDate).toLocaleDateString()}</p>
-    </div>
+          {/* Check-out Date */}
+          <div className="flex justify-between items-center">
+            <p className="text-gray-600">Check-out Date:</p>
+            <p className="font-medium text-gray-800">{new Date(reservationData.checkOutDate).toLocaleDateString()}</p>
+          </div>
 
-    {/* Total Amount */}
-    <div className="flex justify-between items-center border-t pt-4 mt-4">
-      <p className="text-gray-600">Total Amount:</p>
-      <p className="font-semibold text-xl text-gray-900">${reservationData.amount}</p>
-    </div>
-  </div>
-</div>
-
+          {/* Total Amount */}
+          <div className="flex justify-between items-center border-t pt-4 mt-4">
+            <p className="text-gray-600">Total Amount:</p>
+            <p className="font-semibold text-xl text-gray-900">${reservationData.amount}</p>
+          </div>
+        </div>
+      </div>
 
       {/* Card Element */}
       <div className="mb-6">

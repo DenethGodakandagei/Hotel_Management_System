@@ -10,6 +10,12 @@ const Dashboard = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout(); 
+    window.location.href = '/';
+  };
 
   useEffect(() => {
     if (!user) {
@@ -71,7 +77,12 @@ const Dashboard = () => {
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
       <div className="w-1/4 bg-white shadow-lg p-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">User Profile</h2>
+      <div className="flex justify-between">
+       
+      <h2 className="text-xl font-semibold text-gray-800 ">User Profile</h2>
+      <button className="bg-red-500 text-white rounded-md mb-2 p-1" onClick={handleLogout}>Logout</button>
+      </div>
+      
         {error && <p className="text-red-500 mb-4">{error}</p>}
 
         <div className="space-y-4">

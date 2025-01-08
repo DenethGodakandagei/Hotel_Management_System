@@ -10,6 +10,7 @@ import AdminDashboard from './components/Admin/AdminDashboard';
 import ManageRooms from './components/Admin/RoomManage/ManageRooms';
 import Roominfo from './components/Roominfo';
 import { AuthProvider } from './context/AuthContext';
+import ManageReservation from './components/Admin/ReservationManage/ManageReservation';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             element={<ProtectedRoute element={<AdminDashboard />} />}
           />
              <Route path="/managerooms" element={<ManageRooms />} />
+             <Route path="/reservations" element={<ManageReservation />} />
         </Routes>
       </BrowserRouter>
       </AuthProvider>

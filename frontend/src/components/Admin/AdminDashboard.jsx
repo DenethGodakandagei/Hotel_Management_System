@@ -1,7 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext.js";
 
 const AdminDashboard = () => {
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout(); 
+    window.location.href = '/';
+  };
+
+
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
@@ -16,7 +25,7 @@ const AdminDashboard = () => {
             { name: "Rooms", path: "/managerooms" },
             { name: "Reservations", path: "/reservations" },
             { name: "Settings", path: "/settings" },
-            { name: "Logout", path: "/logout" },
+          
           ].map((item, index) => (
             <li key={index}>
               <Link
@@ -27,6 +36,14 @@ const AdminDashboard = () => {
               </Link>
             </li>
           ))}
+           <li>
+              <button
+                onClick={handleLogout}
+                className="pl-2 text-gray-700 hover:text-white hover:bg-orange-500 rounded-md cursor-pointer transition duration-300"
+              >
+               Logout
+              </button>
+            </li>
         </ul>
       </aside>
 

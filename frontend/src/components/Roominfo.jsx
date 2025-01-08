@@ -8,6 +8,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Payment from "./Admin/Payment/Payment";
 import { useAuth } from '../context/AuthContext';
+import { FaArrowLeft , FaArrowRight  } from "react-icons/fa";
 
 // Set up moment localizer for calendar
 const localizer = momentLocalizer(moment);
@@ -184,14 +185,14 @@ const Roominfo = () => {
               className="bg-black text-white rounded-full p-2 opacity-50 hover:opacity-100 transition-all duration-300"
               onClick={handlePrevImage}
             >
-              <i className="fas fa-chevron-left"></i>
+            <FaArrowLeft />
             </button>
 
             <button
               className="bg-black text-white rounded-full p-2 opacity-50 hover:opacity-100 transition-all duration-300"
               onClick={handleNextImage}
             >
-              <i className="fas fa-chevron-right"></i>
+             <FaArrowRight />
             </button>
           </div>
         </div>
