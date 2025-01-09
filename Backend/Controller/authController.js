@@ -1,12 +1,11 @@
 import User from '../Model/User.js';
 import { generateToken } from '../Utils/authUtils.js';
-import bcrypt from 'bcryptjs';
 
 // Register a new user
 const registerUser = async (req, res) => {
   const { name, email, password, role } = req.body;
 
-  // Check if the user already exists
+  //  user already exists
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     return res.status(400).json({ message: 'Email already in use' });
@@ -16,8 +15,8 @@ const registerUser = async (req, res) => {
   const newUser = new User({
     name,
     email,
-    password,  // No need to hash here again since it's handled in UserSchema
-    role: role || 'guest',  // Default to 'guest' if no role is provided
+    password, 
+    role: role || 'guest',  // Default to 'guest'
   });
 
   try {
@@ -60,12 +59,12 @@ const loginUser = async (req, res) => {
   // Generate a JWT token
   const token = generateToken(user._id, user.role);
 
-  // Set the token as a secure cookie
+  // Set the token
   res.cookie("token", token, {
-    httpOnly: true,  // Helps prevent XSS attacks
-    maxAge: 3600000, // 1 hour expiration time for better session management
-    secure: process.env.NODE_ENV === 'production', // Only secure cookies in production
-    sameSite: 'Strict', // Prevent CSRF attacks by ensuring cookies are sent only with same-site requests
+    httpOnly: true,  
+    maxAge: 3600000, // 1 hour expiration 
+    secure: process.env.NODE_ENV === 'production', 
+    sameSite: 'Strict', 
   });
 
   // Respond with the token and user details
@@ -80,7 +79,6 @@ const loginUser = async (req, res) => {
     },
   });
 };
-
 
  const getUser = (req, res) => {
   const user = req.user;

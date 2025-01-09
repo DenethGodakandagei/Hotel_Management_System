@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 // Load Stripe with the publishable key from environment variables
@@ -9,7 +10,6 @@ const stripePromise = loadStripe("pk_test_51QeUmGQP2cLYp48gx46lx8zTLraBQX3wK95fV
 const CheckoutForm = ({ reservationData, onPaymentSuccess }) => {
   const stripe = useStripe();
   const elements = useElements();
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -147,6 +147,7 @@ const CheckoutForm = ({ reservationData, onPaymentSuccess }) => {
 };
 
 const Payment = ({ reservationData, onPaymentSuccess }) => {
+  const navigate = useNavigate();
   // Handle post-payment actions, such as sending the reservation data to the backend
   const handlePaymentSuccess = async (paymentIntent) => {
     try {
@@ -161,6 +162,8 @@ const Payment = ({ reservationData, onPaymentSuccess }) => {
       if (response.status === 201) {
         alert("Reservation created successfully!");
       }
+      navigate("/dashboard");
+    
     } catch (error) {
       console.error("Error creating reservation:", error);
       alert("Error creating reservation.");

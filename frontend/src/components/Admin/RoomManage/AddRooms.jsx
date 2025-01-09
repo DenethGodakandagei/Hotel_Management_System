@@ -15,7 +15,7 @@ const AddRooms = () => {
   const [message, setMessage] = useState("");
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
-  const [rooms, setRooms] = useState([]); // State to store room list
+  const [rooms, setRooms] = useState([]); 
 
   useEffect(() => {
     // Fetch rooms from the server to populate the room list
@@ -65,10 +65,15 @@ const AddRooms = () => {
         Array.from(formData[key]).forEach((image) => {
           data.append("images", image);
         });
+      } else if (key === "amenities") {
+        formData[key].forEach((amenity) => {
+          data.append("amenities", amenity);
+        });
       } else {
         data.append(key, formData[key]);
       }
     });
+    
 
     try {
       const response = await axios.post("http://localhost:5000/api/room/add", data, {

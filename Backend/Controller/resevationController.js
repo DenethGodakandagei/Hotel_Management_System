@@ -23,7 +23,7 @@ export const createReservation = async (req, res) => {
       });
   
       if (existingReservation) {
-        return res.status(400).json({ message: "Room is already booked for the selected dates." });
+        return res.status(400).json({ message: "Room is already booked " });
       }
   
       // Create a new reservation
@@ -45,7 +45,7 @@ export const createReservation = async (req, res) => {
   // Controller to get all reservations
 export const getAllReservations = async (req, res) => {
     try {
-      const reservations = await Reservation.find().populate('roomId'); // Populate roomId to include room details if needed
+      const reservations = await Reservation.find().populate('roomId'); 
       res.status(200).json(reservations);
     } catch (err) {
       res.status(500).json({ message: "Failed to retrieve reservations.", error: err.message });
@@ -101,9 +101,7 @@ export const deleteReservation = async (req, res) => {
     }
 
     const room = await Room.findById(reservation.roomId);
-    if (room) {
-      // Logic to mark the room available can be added if needed
-    }
+   
 
     // Use findByIdAndDelete to delete the reservation
     await Reservation.findByIdAndDelete(reservationId);
