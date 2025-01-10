@@ -49,7 +49,7 @@ const Rooms = () => {
               Choose from a variety of luxurious and budget-friendly options.
             </p>
           </div>
-          <div className="flex flex-wrap justify-center gap-6">
+      <div className="flex flex-wrap justify-center gap-6">
   {rooms.map((room) => (
     <div
       key={room._id}

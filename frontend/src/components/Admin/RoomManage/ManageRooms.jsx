@@ -36,8 +36,8 @@ const ManageRooms = () => {
       <main className="flex-1 p-8">
         {/* Welcome Banner */}
         <div className="bg-gradient-to-r from-orange-400 to-orange-600 text-white p-6 rounded-lg shadow-md">
-          <h2 className="text-3xl font-bold">Welcome, Admin!</h2>
-          <p className="mt-2 text-sm">Here's a summary of your dashboard.</p>
+          <h2 className="text-3xl font-bold">Manage Rooms</h2>
+         
         </div>
 
         {/* Dashboard Content */}

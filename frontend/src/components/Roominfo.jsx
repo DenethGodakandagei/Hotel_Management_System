@@ -26,7 +26,7 @@ const Roominfo = () => {
 
   const location = useLocation();
   const room = location.state?.room;
-
+  
   
 
   useEffect(() => {
@@ -171,7 +171,7 @@ const Roominfo = () => {
   if (!room) return <p>Loading room details...</p>;
 
   return (
-    <div className="w-screen min-h-screen items-center justify-center px-6 py-12">
+    <div className="w-screen min-h-screen items-center justify-center px-6 py-12 overflow-hidden">
       <div className="w-3/4 mx-auto flex flex-col items-center justify-center">
         {/* Image Carousel */}
         <div className="relative group w-full">
@@ -202,7 +202,7 @@ const Roominfo = () => {
           {room.images.map((image, index) => (
             <div
               key={index}
-              className={`cursor-pointer w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden transition-all duration-300 transform ${
+              className={`cursor-pointer w-20 h-20 md:w-24 md:h-24 rounded-lg  transition-all duration-300 transform ${
                 index === currentImageIndex ? "scale-105 border-4 border-blue-500" : "hover:scale-110"
               }`}
               onClick={() => setCurrentImageIndex(index)}
@@ -213,7 +213,7 @@ const Roominfo = () => {
         </div>
       </div>
 
-      <div className="max-w-screen-xl w-full bg-white rounded-2xl shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 gap-12 p-8 mx-auto items-center justify-center">
+      <div className="max-w-screen-xl w-full bg-white rounded-2xl shadow-xl grid grid-cols-1 lg:grid-cols-2 gap-12 p-8 mx-auto items-center justify-center">
 {/* Room Details */}
 <div className="flex flex-col items-start space-y-8 bg-gray-50 p-6 rounded-2xl shadow-md">
   {/* Room Information */}

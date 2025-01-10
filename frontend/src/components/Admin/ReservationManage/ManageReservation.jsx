@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import AllReservations from './AllReservations'
 
 const ManageReservation = () => {
   return (
@@ -41,19 +42,16 @@ const ManageReservation = () => {
       {/* Dashboard Content */}
       <div className="mt-10">
         {/* Dashboard Widgets */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 ">
-          <div className="bg-white rounded-lg shadow-md">
-       
-          </div>
+        
           <div className="bg-white p-6 rounded-lg shadow-md">
          
-    
+    <AllReservations />
           </div>
           
         </div>
 
       
-      </div>
+      
     </main>
 
    

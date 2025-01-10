@@ -12,7 +12,7 @@ const AddRooms = () => {
     description: "",
   });
 
-  const [message, setMessage] = useState("");
+ 
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [rooms, setRooms] = useState([]); 
@@ -86,7 +86,7 @@ const AddRooms = () => {
         },
       });
 
-      setMessage("Room added successfully!");
+      alert("Room added successfully!");
       setFormData({
         roomNumber: "",
         roomType: "",
@@ -102,7 +102,7 @@ const AddRooms = () => {
       setRooms(updatedRooms.data);
     } catch (error) {
       const errorMessage = error.response?.data?.message || error.message || "Error adding room";
-      setMessage(errorMessage);
+      alert(errorMessage);
     } finally {
       setIsUploading(false);
     }
@@ -256,10 +256,7 @@ const AddRooms = () => {
           </div>
         )}
 
-        {/* Success/Error Message */}
-        {message && (
-          <div className="mt-4 text-center text-green-600">{message}</div>
-        )}
+      
       </div>
     </div>
   );

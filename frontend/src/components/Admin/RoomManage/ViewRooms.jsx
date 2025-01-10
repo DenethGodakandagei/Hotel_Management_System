@@ -18,6 +18,14 @@ const ViewRooms = () => {
 
   useEffect(() => {
     fetchRooms();
+
+    // Auto-refresh every 30 seconds
+    const intervalId = setInterval(() => {
+      fetchRooms();
+    }, 30000); // 30 seconds
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
   }, []);
 
   // Handle Delete Room
@@ -64,10 +72,10 @@ const ViewRooms = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className=" content-center bg-gray-50">
       {/* Room Table */}
       <div className="overflow-x-auto">
-        <table className="min-w-full rounded-md bg-white border border-gray-300 shadow-md">
+        <table className="w-full rounded-md bg-white  shadow-md">
           <thead>
             <tr className="bg-orange-200 text-gray-700">
               <th className="p-4">Room Name</th>
@@ -80,7 +88,7 @@ const ViewRooms = () => {
           <tbody>
             {rooms.map((room) => (
               <tr key={room._id} className="border-b">
-                   <td className="p-4">{room.roomType} Room</td>
+                <td className="p-4">{room.roomType} Room</td>
                 <td className="p-4">{room.roomNumber}</td>
                 <td className="p-4">${room.pricePerNight}</td>
                 <td className="p-4">
