@@ -27,7 +27,7 @@ export const createMenuItem = async (req, res) => {
         description,
         price,
         category,
-        imageUrls: imageLinks,
+        imageUrl: imageLinks,
       });
   
       await newItem.save();

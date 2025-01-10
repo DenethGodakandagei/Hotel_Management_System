@@ -87,6 +87,11 @@ function NavBar() {
                   </a>
                 </li>
                 <li className="pb-6 text-xl  text-orange-700 py-2 md:px-6 text-center border-b-2 md:border-b-0">
+                <Link to="/dining" className="block md:inline">
+                    Dining
+                 </Link>
+                </li>
+                <li className="pb-6 text-xl  text-orange-700 py-2 md:px-6 text-center border-b-2 md:border-b-0">
                   <a href="#contact" >
                     Contact
                   </a>

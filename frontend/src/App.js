@@ -12,6 +12,7 @@ import Roominfo from './components/Roominfo';
 import { AuthProvider } from './context/AuthContext';
 import ManageReservation from './components/Admin/ReservationManage/ManageReservation';
 import ManageMenu from './components/Admin/MenuManage/ManageMenu';
+import Dining from './pages/Dining';
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
           <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/:id" element={<Roominfo />} />
-
+          <Route path="/dining" element={<Dining />} />
           <Route
             path="/dashboard"
             element={<ProtectedRoute element={<Dashboard />} />}
