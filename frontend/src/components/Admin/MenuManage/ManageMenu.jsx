@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import AllReservations from './AllReservations'
+import AddMenu from './AddMenu'
 
-const ManageReservation = () => {
+const ManageMenu = () => {
   return (
     <div className="flex h-screen bg-gray-50">
     {/* Sidebar */}
@@ -16,7 +16,6 @@ const ManageReservation = () => {
           { name: "Manage Users", path: "/manageusers" },
           { name: "Rooms", path: "/managerooms" }, 
           { name: "Reservations", path: "/reservations" },
-          { name: "Manage Menu", path: "/managemenu" },
           { name: "Settings", path: "/settings" },
           { name: "Logout", path: "/logout" },
         ].map((item, index) => (
@@ -36,7 +35,7 @@ const ManageReservation = () => {
     <main className="flex-1 p-8">
       {/* Welcome Banner */}
       <div className="bg-gradient-to-r from-orange-400 to-orange-600 text-white p-6 rounded-lg shadow-md">
-        <h2 className="text-3xl font-bold">Manage Reservations</h2>
+        <h2 className="text-3xl font-bold">Manage Menu</h2>
         <p className="mt-2 text-sm">Here's a summary of your dashboard.</p>
       </div>
 
@@ -46,7 +45,7 @@ const ManageReservation = () => {
         
           <div className="bg-white p-6 rounded-lg shadow-md">
          
-    <AllReservations />
+   <AddMenu />
           </div>
           
         </div>
@@ -60,4 +59,4 @@ const ManageReservation = () => {
   )
 }
 
-export default ManageReservation
+export default ManageMenu

@@ -147,6 +147,7 @@ const CheckoutForm = ({ reservationData, onPaymentSuccess }) => {
 };
 
 const Payment = ({ reservationData, onPaymentSuccess }) => {
+  console.log(reservationData);
   const navigate = useNavigate();
   // Handle post-payment actions, such as sending the reservation data to the backend
   const handlePaymentSuccess = async (paymentIntent) => {

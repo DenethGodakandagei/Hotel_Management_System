@@ -1,5 +1,5 @@
 import React from 'react'
-import { Datafearture } from './Features/DataFeartures.js'
+import { Datafearture } from '../assets/Features/DataFeartures.js'
 export const Features = () => {
   return (
     <div id='feartures'>

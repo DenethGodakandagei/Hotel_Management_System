@@ -11,6 +11,7 @@ import ManageRooms from './components/Admin/RoomManage/ManageRooms';
 import Roominfo from './components/Roominfo';
 import { AuthProvider } from './context/AuthContext';
 import ManageReservation from './components/Admin/ReservationManage/ManageReservation';
+import ManageMenu from './components/Admin/MenuManage/ManageMenu';
 
 
 function App() {
@@ -34,6 +35,8 @@ function App() {
           />
              <Route path="/managerooms" element={<ManageRooms />} />
              <Route path="/reservations" element={<ManageReservation />} />
+             <Route path="/managemenu" element={<ManageMenu />} />
+             
         </Routes>
       </BrowserRouter>
       </AuthProvider>

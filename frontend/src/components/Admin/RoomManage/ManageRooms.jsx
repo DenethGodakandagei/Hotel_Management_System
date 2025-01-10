@@ -17,6 +17,7 @@ const ManageRooms = () => {
             { name: "Manage Users", path: "/manageusers" },
             { name: "Rooms", path: "/managerooms" },
             { name: "Reservations", path: "/reservations" },
+            { name: "Manage Menu", path: "/managemenu" },
             { name: "Settings", path: "/settings" },
             { name: "Logout", path: "/logout" },
           ].map((item, index) => (

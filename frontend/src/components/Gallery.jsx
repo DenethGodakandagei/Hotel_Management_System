@@ -1,5 +1,5 @@
 import React from 'react'
-import { Data } from './Gallery/Data.js';
+import { Data } from '../assets/Gallery/Data.js';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 export const Gallery = () => {
     const slideLeft = () => {
@@ -22,7 +22,7 @@ export const Gallery = () => {
         <MdChevronLeft className='opacity-50 cursor-pointer hover:opacity-150' onClick={slideLeft} size={40} />
         <div
           id='slider'
-          className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide '
+          className='w-full h-full overflow-x-scroll overflow-y-hidden scroll whitespace-nowrap scroll-smooth scrollbar-hide '
         >
           {Data.map((item) => (
             <img

@@ -8,8 +8,7 @@ import authRoutes from './Routes/authRoutes.js';
 import roomRoutes from './Routes/roomRoutes.js'
 import reservationRoutes from './Routes/resevationRoutes.js';
 import paymentRoutes  from './Routes/PaymentRoutes.js';
-import { verifyToken } from './Middelware/verifyToken.js';
-
+import menuRoutes from './Routes/menuRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -27,6 +26,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/room',roomRoutes);
 app.use('/api/reservations', reservationRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use('/api/menu', menuRoutes);
 
 const PORT = process.env.PORT || 5000;
 
