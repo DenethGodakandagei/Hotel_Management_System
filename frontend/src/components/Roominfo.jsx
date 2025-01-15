@@ -6,7 +6,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Payment from "./Admin/Payment/Payment";
+import Payment from "./Payment/Payment.jsx";
 import { useAuth } from '../context/AuthContext';
 import { FaArrowLeft , FaArrowRight  } from "react-icons/fa";
 
