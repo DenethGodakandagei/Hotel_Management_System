@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext.js';
+import ManageReservation from '../Admin/ReservationManage/ManageReservation.jsx';
+import ViewRooms from '../Admin/RoomManage/ViewRooms.jsx';
+import ManageMenu from '../Admin/MenuManage/ManageMenu.jsx';
+import AllReservations from '../Admin/ReservationManage/AllReservations.jsx';
 
 const StaffDashboard = () => {
   const { user } = useAuth(); // Get the logged-in user from context
@@ -34,9 +38,8 @@ const StaffDashboard = () => {
           <div>
             <h2>Manager Dashboard</h2>
             <ul>
-              <li>View and Manage Reservations</li>
-              <li>Manage Staff</li>
-              <li>Generate Reports</li>
+             <AllReservations />
+             Generete reports
             </ul>
           </div>
         );
@@ -44,32 +47,22 @@ const StaffDashboard = () => {
         return (
           <div>
             <h2>Receptionist Dashboard</h2>
-            <ul>
-              <li>Handle Guest Check-Ins/Check-Outs</li>
-              <li>Manage Reservations</li>
-              <li>View Room Status</li>
-            </ul>
+            <AllReservations />
+           <ViewRooms />
           </div>
         );
       case 'housekeeping':
         return (
           <div>
             <h2>Housekeeping Dashboard</h2>
-            <ul>
-              <li>Update Room Status</li>
-              <li>Report Maintenance Issues</li>
-            </ul>
+           
           </div>
         );
       case 'chef':
         return (
           <div>
             <h2>Chef Dashboard</h2>
-            <ul>
-              <li>Manage Menu</li>
-              <li>Track Orders</li>
-              <li>Monitor Kitchen Inventory</li>
-            </ul>
+           <ManageMenu />
           </div>
         );
       default:
