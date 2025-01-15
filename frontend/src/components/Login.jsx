@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
+import logo from "../assets/logo.svg";
+import { IoMdHome } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../context/AuthContext.js';
 
@@ -44,6 +47,17 @@ const Login = () => {
   };
 
   return (
+    <div>
+    <div className="flex items-center justify-between w-full">
+    <div>
+      <img src={logo} alt="Logo" style={{ width: "70px" }} />
+    </div>
+    <Link to={"/"}>
+      <div className="p-2 m-3 border border-solid rounded-md border-orange-500 ">
+        <IoMdHome style={{ fontSize: "30px", color: "orange" }} />
+      </div>
+    </Link>
+  </div>
     <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl text-orange-500 font-bold text-center mb-6">Login</h2>
 
@@ -81,6 +95,7 @@ const Login = () => {
           {success && <div className="text-green-500 text-sm">{success}</div>}
         </div>
       </form>
+    </div>
     </div>
   );
 };
