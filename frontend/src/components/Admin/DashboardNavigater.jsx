@@ -22,7 +22,7 @@ const handleLogout = () => {
         </h1>
         <ul className="space-y-6">
           {[
-            { name: "Dashboard Overview", path: "/" },
+            { name: "Dashboard Overview", path: "/Admin/dashboard" },
             { name: "Manage Users", path: "/manageusers" },
             { name: "Rooms", path: "/managerooms" },
             { name: "Reservations", path: "/reservations" },

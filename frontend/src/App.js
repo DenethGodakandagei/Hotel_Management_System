@@ -13,6 +13,8 @@ import { AuthProvider } from './context/AuthContext';
 import ManageReservation from './components/Admin/ReservationManage/ManageReservation';
 import ManageMenu from './components/Admin/MenuManage/ManageMenu';
 import Dining from './pages/Dining';
+import ManageUsers from './components/Admin/ManageUsers/ManageUsers';
+import AdminSettings from './components/Admin/ManageUsers/AdminSettings/AdminSettings';
 
 
 function App() {
@@ -37,6 +39,8 @@ function App() {
              <Route path="/managerooms" element={<ManageRooms />} />
              <Route path="/reservations" element={<ManageReservation />} />
              <Route path="/managemenu" element={<ManageMenu />} />
+             <Route path="/manageusers" element={<ManageUsers />} />
+             <Route path="/settings" element={<AdminSettings />} />
              
         </Routes>
       </BrowserRouter>
