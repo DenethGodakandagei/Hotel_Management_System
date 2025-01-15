@@ -91,8 +91,8 @@ const ViewMenu = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <h1 className="text-3xl font-bold text-gray-800 mb-6">Menu Items</h1>
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200 bg-white shadow-md rounded-lg">
-          <thead className="bg-gray-50">
+        <table className="min-w-full divide-y divide-orange-200 bg-white shadow-md rounded-lg">
+          <thead className="bg-orange-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Name
@@ -114,7 +114,7 @@ const ViewMenu = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-orange-200">
             {menuItems.map((item) => (
               <tr key={item._id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">

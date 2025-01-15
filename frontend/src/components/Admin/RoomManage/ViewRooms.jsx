@@ -75,49 +75,48 @@ const ViewRooms = () => {
     <div className=" content-center bg-gray-50">
       {/* Room Table */}
       <div className="overflow-x-auto">
-        <table className="w-full rounded-md bg-white  shadow-md">
-          <thead>
-            <tr className="bg-orange-200 text-gray-700">
-              <th className="p-4">Room Name</th>
-              <th className="p-4">Room No</th>
-              <th className="p-4">Price</th>
-              <th className="p-4">Image</th>
-              <th className="p-4">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rooms.map((room) => (
-              <tr key={room._id} className="border-b">
-                <td className="p-4">{room.roomType} Room</td>
-                <td className="p-4">{room.roomNumber}</td>
-                <td className="p-4">${room.pricePerNight}</td>
-                <td className="p-4">
-                  {room.images.length > 0 ? (
-                    <img src={room.images[0]} alt="Room" className="w-16 h-16 object-cover" />
-                  ) : (
-                    <span>No Image</span>
-                  )}
-                </td>
-                <td className="p-4 flex space-x-2">
-                  {/* Edit Button */}
-                  <button
-                    onClick={() => handleEdit(room)}
-                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
-                  >
-                    Edit
-                  </button>
-                  {/* Delete Button */}
-                  <button
-                    onClick={() => handleDelete(room._id)}
-                    className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-300"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <table className="min-w-full bg-white shadow-lg rounded-lg overflow-hidden">
+  <thead className="bg-orange-100 text-gray-800">
+    <tr>
+      <th className="px-6 py-4 text-sm font-semibold uppercase tracking-wide text-left">Room Name</th>
+      <th className="px-6 py-4 text-sm font-semibold uppercase tracking-wide text-left">Room No</th>
+      <th className="px-6 py-4 text-sm font-semibold uppercase tracking-wide text-left">Price</th>
+      <th className="px-6 py-4 text-sm font-semibold uppercase tracking-wide text-left">Image</th>
+      <th className="px-6 py-4 text-sm font-semibold uppercase tracking-wide text-left">Actions</th>
+    </tr>
+  </thead>
+  <tbody className="divide-y divide-orange-200">
+    {rooms.map((room) => (
+      <tr key={room._id} className="hover:bg-gray-50 transition duration-300">
+        <td className="px-6 py-4 text-sm text-gray-700">{room.roomType} Room</td>
+        <td className="px-6 py-4 text-sm text-gray-600">{room.roomNumber}</td>
+        <td className="px-6 py-4 text-sm text-gray-800">${room.pricePerNight}</td>
+        <td className="px-6 py-4">
+          {room.images.length > 0 ? (
+            <img src={room.images[0]} alt="Room" className="w-16 h-16 object-cover rounded-md shadow-md" />
+          ) : (
+            <span className="text-gray-400">No Image</span>
+          )}
+        </td>
+        <td className="px-6 py-4 flex space-x-2">
+          <button
+            onClick={() => handleEdit(room)}
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => handleDelete(room._id)}
+            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
       </div>
 
       {/* Modal for Editing Room */}
