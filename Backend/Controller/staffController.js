@@ -54,6 +54,25 @@ export const getStaffById = async (req, res) => {
   }
 };
 
+// Get a staff member by userId
+export const getStaffByUserId = async (req, res) => {
+    try {
+      const { userId } = req.params;
+  
+      // Find staff by userId
+      const staff = await Staff.findOne({ userId }).populate('userId', 'name email');
+  
+      if (!staff) {
+        return res.status(404).json({ message: 'Staff member not found' });
+      }
+  
+      res.status(200).json(staff);
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
+  };
+  
+
 // Update a staff member
 export const updateStaff = async (req, res) => {
   try {

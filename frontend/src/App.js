@@ -15,6 +15,7 @@ import ManageMenu from './components/Admin/MenuManage/ManageMenu';
 import Dining from './pages/Dining';
 import ManageUsers from './components/Admin/ManageUsers/ManageUsers';
 import AdminSettings from './components/Admin/ManageUsers/AdminSettings/AdminSettings';
+import StaffDashboard from './components/Staff/StaffDashboard';
 
 
 function App() {
@@ -35,6 +36,10 @@ function App() {
             <Route
             path="/admin/dashboard"
             element={<ProtectedRoute element={<AdminDashboard />} />}
+          />
+          <Route
+            path="/staff/dashboard"
+            element={<ProtectedRoute element={<StaffDashboard />} />}
           />
              <Route path="/managerooms" element={<ManageRooms />} />
              <Route path="/reservations" element={<ManageReservation />} />
