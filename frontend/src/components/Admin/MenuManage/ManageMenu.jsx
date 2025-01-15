@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import AddMenu from './AddMenu'
+import ViewMenu from './ViewMenu'
 
 const ManageMenu = () => {
   return (
@@ -16,6 +17,7 @@ const ManageMenu = () => {
           { name: "Manage Users", path: "/manageusers" },
           { name: "Rooms", path: "/managerooms" }, 
           { name: "Reservations", path: "/reservations" },
+          { name: "Manage Menu", path: "/managemenu" },
           { name: "Settings", path: "/settings" },
           { name: "Logout", path: "/logout" },
         ].map((item, index) => (
@@ -46,6 +48,7 @@ const ManageMenu = () => {
           <div className="bg-white p-6 rounded-lg shadow-md">
          
    <AddMenu />
+   <ViewMenu />
           </div>
           
         </div>
