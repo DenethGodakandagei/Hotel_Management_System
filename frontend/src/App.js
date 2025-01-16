@@ -20,7 +20,7 @@ import StaffDashboard from './components/Staff/StaffDashboard';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App font-barlow">
          <AuthProvider>
       <BrowserRouter>
         <Routes>

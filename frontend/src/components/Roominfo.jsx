@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -9,6 +9,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import Payment from "./Payment/Payment.jsx";
 import { useAuth } from '../context/AuthContext';
 import { FaArrowLeft , FaArrowRight  } from "react-icons/fa";
+import logo from "../assets/logo.svg";
+import { IoMdHome } from "react-icons/io";
+
 
 // Set up moment localizer for calendar
 const localizer = momentLocalizer(moment);
@@ -175,7 +178,17 @@ const Roominfo = () => {
  
 
   return (
-    <div className="w-screen min-h-screen items-center justify-center px-6 py-12">
+    <div className=" w-screen min-h-screen items-center justify-center px-6 pt-0 py-12">
+       <div className=" flex items-center justify-between w-full">
+    <div>
+      <img src={logo} alt="Logo" style={{ width: "70px" }} />
+    </div>
+    <Link to={"/"}>
+      <div className=" border border-solid rounded-md border-orange-500 ">
+        <IoMdHome style={{ fontSize: "30px", color: "orange" }} />
+      </div>
+    </Link>
+  </div>
       <div className="w-3/4 mx-auto flex flex-col items-center justify-center">
         {/* Image Carousel */}
         <div className="relative group w-full">

@@ -22,7 +22,7 @@ function NavBar() {
             <img src={logo} style={{width : "70px"}}/>
             </div>
 
-            <span className="mt-6 text-orange-400">LuxeStay</span>
+            <span className="mt-6 text-primary1">LuxeStay</span>
               {/* HAMBURGER BUTTON FOR MOBILE */}
               <div className="md:hidden">
                 <button
@@ -71,40 +71,40 @@ function NavBar() {
               }`}
             >
               <ul className="h-screen md:h-auto items-center justify-center md:flex ">
-              <li className="pb-6 text-xl  text-orange-700 py-2 md:px-6 text-center border-b-2 md:border-b-0">
+              <li className="pb-6 text-xl  text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
                   <a href="#about">
                     About
                   </a>
                 </li>
-                <li className="pb-6 text-xl  text-orange-700 py-2 md:px-6 text-center border-b-2 md:border-b-0">
+                <li className="pb-6 text-xl  text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
                   <a href="#portfolio" >
                   Rooms
                   </a>
                 </li>
-                <li className="pb-6 text-xl  text-orange-700 py-2 md:px-6 text-center border-b-2 md:border-b-0">
+                <li className="pb-6 text-xl text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
                   <a href="#blog" >
                     Explore
                   </a>
                 </li>
-                <li className="pb-6 text-xl  text-orange-700 py-2 md:px-6 text-center border-b-2 md:border-b-0">
+                <li className="pb-6 text-xl  text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
                 <Link to="/dining" className="block md:inline">
                     Dining
                  </Link>
                 </li>
-                <li className="pb-6 text-xl  text-orange-700 py-2 md:px-6 text-center border-b-2 md:border-b-0">
+                <li className="pb-6 text-xl  text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
                   <a href="#contact" >
                     Contact
                   </a>
                 </li>
                 {!user ? (
               <>
-                  <li className="pb-6 text-xl  text-orange-700 py-2 md:px-6 text-center border-b-2 md:border-b-0">
+                  <li className="pb-6 text-xl  text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
                   <Link to="/signin" className="block md:inline">Signin</Link>
                 </li>
-                <li className="pb-6 text-xl  text-orange-700 py-2 md:px-6 text-center border-b-2 md:border-b-0">
+                <li className="pb-6 text-xl  text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
                   <Link
                     to="/signup"
-                    className="block md:inline bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700"
+                    className="block md:inline bg-primary1 text-white px-4 py-2 rounded-md hover:bg-primary2"
                   >
                     Signup
                   </Link>
@@ -113,10 +113,10 @@ function NavBar() {
             ) : (
               <div className="">
              
-                <li className="pb-6 text-xl  text-orange-700 py-2 md:px-6 text-center border-b-2 md:border-b-0">
+                <li className="pb-6 text-xl  text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
                 <Link
                     to="/dashboard"
-                    className="block md:inline bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700"
+                    className="block md:inline bg-primary1 text-white px-4 py-2 rounded-md hover:bg-primary1"
                   >
                {user.name}
                </Link>

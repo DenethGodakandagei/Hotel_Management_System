@@ -1,8 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap");
+
+@font-face {
+  font-family: "Barlow-ExtraLight";
+  src: url("./assets/Fonts/Barlow-ExtraLight.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Barlow-Light";
+  src: url("./assets/Fonts/Barlow-Light.ttf") format("truetype");
+}
 html {
   scroll-behavior: smooth;
+
 }
 body {
+  
   overflow-x: hidden;
   font-family: "Roboto Condensed", sans-serif;
   overflow-x: hidden;

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from "../../context/AuthContext.js";
+import logo from "../../assets/logo.svg";
+import { IoMdHome } from "react-icons/io";
 
 const DashboardNavigater = () => {
   const { logout } = useAuth();
@@ -12,12 +14,23 @@ const DashboardNavigater = () => {
 
   return (
     <div className="flex">
+      
       {/* Sidebar */}
-      <aside className=" h-screen bg-white shadow-lg p-6 fixed">
-        <h1 className="text-2xl font-bold text-orange-600 mb-10">
+      <aside className=" h-screen bg-white shadow-lg  fixed">
+      <div className=" flex items-center justify-between w-full">
+          <div className='m-3'>
+            <img src={logo} alt="Logo" style={{ width: "40px" }} />
+          </div>
+          <Link to={"/"}>
+            <div className="  rounded-md ">
+              <IoMdHome style={{ fontSize: "20px", color: "orange" }} />
+            </div>
+          </Link>
+        </div>
+        <h1 className="text-2xl p-6 font-bold text-orange-600 mb-10">
           Admin Dashboard
         </h1>
-        <ul className="space-y-6">
+        <ul className="space-y-6 p-6">
           {[
             { name: "Dashboard Overview", path: "/Admin/dashboard" },
             { name: "Manage Users", path: "/manageusers" },
@@ -45,11 +58,9 @@ const DashboardNavigater = () => {
           </li>
         </ul>
       </aside>
-
-      {/* Main Content */}
-      <main className="ml-1/5 w-4/5 p-6">
-        {/* Replace with your main content */}
-        <h2 className="text-xl font-bold">Main Content Goes Here</h2>
+      
+      <main className="  p-28">
+       
       </main>
     </div>
   );
