@@ -82,13 +82,13 @@ const Register = () => {
           <img src={logo} alt="Logo" style={{ width: "70px" }} />
         </div>
         <Link to={"/"}>
-          <div className="p-2 m-3 border border-solid rounded-md border-orange-500 ">
+          <div className="p-2 m-3 border border-solid rounded-md border-primary1 ">
             <IoMdHome style={{ fontSize: "30px", color: "orange" }} />
           </div>
         </Link>
       </div>
       <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl text-orange-500 font-bold text-center mb-6">
+        <h2 className="text-2xl text-primary1 font-bold text-center mb-6">
           Register
         </h2>
 
@@ -101,7 +101,7 @@ const Register = () => {
               value={userData.name}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary1"
             />
           </div>
           <div className="mb-4">
@@ -112,7 +112,7 @@ const Register = () => {
               value={userData.email}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary1"
             />
           </div>
           <div className="mb-4">
@@ -123,7 +123,7 @@ const Register = () => {
               value={userData.password}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary1"
             />
           </div>
           <div className="mb-4">
@@ -133,7 +133,7 @@ const Register = () => {
               name="profile"
               value={userData.profile}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary1"
             />
           </div>
           <div className="mb-4">
@@ -142,7 +142,7 @@ const Register = () => {
               name="role"
               value={userData.role}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary1"
             >
               <option value="guest">Guest</option>
               <option value="staff">Staff</option>
@@ -157,7 +157,7 @@ const Register = () => {
                 name="staffRole"
                 value={userData.staffRole}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary1"
               >
                 <option value="manager">Manager</option>
                 <option value="receptionist">Receptionist</option>
@@ -174,7 +174,7 @@ const Register = () => {
               name="phone"
               value={userData.phone}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary1"
             />
           </div>
           <div className="mb-4">
@@ -184,12 +184,12 @@ const Register = () => {
               name="address"
               value={userData.address}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary1"
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600"
+            className="w-full bg-primary1 text-white py-2 rounded-md hover:bg-primary1"
           >
             Register
           </button>

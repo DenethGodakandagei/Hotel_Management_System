@@ -235,7 +235,7 @@ const AddRooms = () => {
           <button
             type="submit"
             className={`px-4 py-2 text-white rounded ${
-              isUploading ? "bg-gray-400" : "bg-orange-400 hover:bg-orange-500"
+              isUploading ? "bg-gray-400" : "bg-primary1 hover:bg-primary1"
             }`}
             disabled={isUploading}
           >

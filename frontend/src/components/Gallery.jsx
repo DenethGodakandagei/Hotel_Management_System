@@ -14,7 +14,7 @@ export const Gallery = () => {
   return (
     <div>
           <div class="w-full pl-5 lg:pl-2 mb-4 mt-4" id='gallery'>
-            <h1 class="text-3xl lg:text-4xl text-orange-400 font-extrabold text-center p-12">
+            <h1 class="text-3xl lg:text-4xl text-primary1 font-extrabold text-center p-12">
              Our Gallery
             </h1>
           </div>

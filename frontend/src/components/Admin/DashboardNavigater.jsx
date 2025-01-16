@@ -27,7 +27,7 @@ const DashboardNavigater = () => {
             </div>
           </Link>
         </div>
-        <h1 className="text-2xl p-6 font-bold text-orange-600 mb-10">
+        <h1 className="text-2xl p-6 font-bold text-primary1 mb-10">
           Admin Dashboard
         </h1>
         <ul className="space-y-6 p-6">
@@ -42,7 +42,7 @@ const DashboardNavigater = () => {
             <li key={index}>
               <Link
                 to={item.path} // Use Link for navigation
-                className="p-3 text-gray-700 hover:text-white hover:bg-orange-500 rounded-md cursor-pointer transition duration-300"
+                className="p-3 text-gray-700 hover:text-white hover:bg-primary1 rounded-md cursor-pointer transition duration-300"
               >
                 {item.name}
               </Link>
@@ -51,7 +51,7 @@ const DashboardNavigater = () => {
           <li>
             <button
               onClick={handleLogout}
-              className="pl-2 text-gray-700 hover:text-white hover:bg-orange-500 rounded-md cursor-pointer transition duration-300"
+              className="p-3 text-gray-700 hover:text-white hover:bg-primary1 rounded-md cursor-pointer transition duration-300"
             >
               Logout
             </button>

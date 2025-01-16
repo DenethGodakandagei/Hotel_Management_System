@@ -42,7 +42,7 @@ const Rooms = () => {
       <div className="flex w-screen min-h-screen " id="room">
         <div className=" mx-auto ">
           <div className="w-full text-center mb-8 mt-4">
-            <h1 className="text-4xl font-extrabold text-orange-500">
+            <h1 className="text-4xl font-extrabold text-primary1">
               Explore Our Rooms
             </h1>
             <p className="text-gray-600 mt-2">
@@ -53,7 +53,7 @@ const Rooms = () => {
   {rooms.map((room) => (
     <div
       key={room._id}
-      className="max-w-sm w-full bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300"
+      className="max-w-sm w-full border border-gray-200 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300"
     >
       {/* Room Image */}
       {room.images.length > 0 ? (
@@ -96,12 +96,12 @@ const Rooms = () => {
         
         {/* Price and Booking */}
         <div className="flex justify-between items-center mt-6">
-          <div className="text-lg font-semibold text-orange-500">
+          <div className="text-lg font-semibold text-primary1">
             ${room.pricePerNight} / night
           </div>
           <button
             onClick={() => handleBookNow(room)}
-            className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition duration-200"
+            className="bg-primary1 text-white px-4 py-2 rounded-lg hover:bg-primary1 transition duration-200"
           >
             Book Now
           </button>

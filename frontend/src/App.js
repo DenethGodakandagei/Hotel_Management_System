@@ -14,7 +14,7 @@ import ManageReservation from './components/Admin/ReservationManage/ManageReserv
 import ManageMenu from './components/Admin/MenuManage/ManageMenu';
 import Dining from './pages/Dining';
 import ManageUsers from './components/Admin/ManageUsers/ManageUsers';
-import AdminSettings from './components/Admin/ManageUsers/AdminSettings/AdminSettings';
+import AdminSettings from './components/Admin/AdminSettings/AdminSettings';
 import StaffDashboard from './components/Staff/StaffDashboard';
 
 

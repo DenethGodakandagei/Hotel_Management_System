@@ -4,7 +4,7 @@ export const Features = () => {
   return (
     <div id='feartures'>
         <div className="container mx-auto ">
-        <h1 className="text-3xl lg:text-4xl text-orange-400 font-extrabold text-center p-6">
+        <h1 className="text-3xl lg:text-4xl text-primary1 font-extrabold text-center p-6">
               Hotel Features
             </h1>
   <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 ">

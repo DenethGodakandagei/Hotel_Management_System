@@ -4,7 +4,7 @@ export const Contact = () => {
   return (
     <div>
       <div class="container my-24 mx-auto md:px-6" id="contact">
-        <h1 class="text-3xl lg:text-4xl text-orange-400 font-extrabold text-center p-6">
+        <h1 class="text-3xl lg:text-4xl text-primary1 font-extrabold text-center p-6">
           Explore our current promotions and exclusive deals to make the most of
           your stay with us.
         </h1>
@@ -15,7 +15,7 @@ export const Contact = () => {
               <div className="grid items-center lg:grid-cols-2">
                 <div className="mb-12 md:mt-12 lg:mt-0 lg:mb-0">
                   <div className="relative z-[1] block rounded-lg bg-[hsla(0,0%,100%,0.55)] px-2 py-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] backdrop-blur-[30px] dark:bg-gray-60 dark:shadow-black/20 md:px-12 lg:-mr-14 m-6">
-                    <h2 className="mb-12 text-3xl font-bold text-orange-400">
+                    <h2 className="mb-12 text-3xl font-bold text-primary1">
                       Contact us
                     </h2>
                     <form className="w-full max-w-lg">
@@ -66,7 +66,7 @@ export const Contact = () => {
                       <div className="md:flex md:items-center">
                         <div className="md:w-1/3">
                           <button
-                            className="shadow bg-orange-400 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                            className="shadow bg-primary1 hover:bg-primary1 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                             type="button"
                           >
                             Send

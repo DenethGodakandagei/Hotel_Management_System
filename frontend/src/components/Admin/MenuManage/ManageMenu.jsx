@@ -19,7 +19,7 @@ const ManageMenu = () => {
       {/* Main Content */}
       <main className="flex-1 p-8">
         {/* Welcome Banner */}
-        <div className="flex justify-between bg-gradient-to-r from-orange-400 to-orange-600 text-white p-6 rounded-lg shadow-md">
+        <div className="flex justify-between bg-gradient-to-r from-primary2 to-primary1 text-white p-6 rounded-lg shadow-md">
           <h2 className="text-3xl font-bold">Manage Menu</h2>
           <button
             onClick={toggleModal}

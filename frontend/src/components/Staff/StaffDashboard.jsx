@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext.js";
 import ViewRooms from "../Admin/RoomManage/ViewRooms.jsx";
-import ManageMenu from "../Admin/MenuManage/ManageMenu.jsx";
 import AllReservations from "../Admin/ReservationManage/AllReservations.jsx";
 import ViewMenu from "../Admin/MenuManage/ViewMenu.jsx";
 
@@ -64,7 +63,7 @@ const StaffDashboard = () => {
         return (
           <div>
             {/* Header Section */}
-            <div className="flex justify-between bg-gradient-to-r from-orange-400 to-orange-600 text-white p-6 rounded-lg shadow-md">
+            <div className="flex justify-between bg-gradient-to-r from-primary2 to-primary1 text-white p-6 rounded-lg shadow-md">
               <h2 className="text-3xl font-bold">Manager Dashboard</h2>
               <button className="text-2xl border border-white rounded-md p-2 font-bold hover:scale-105 transition-transform">
                 Add Room
@@ -78,7 +77,7 @@ const StaffDashboard = () => {
                 onClick={() => setActiveTab("ViewRooms")}
                 className={`text-xl font-bold p-2 ${
                   activeTab === "ViewRooms"
-                    ? "bg-orange-600 text-white rounded-md"
+                    ? "bg-primary1 text-white rounded-md"
                     : "text-gray-700"
                 }`}
               >
@@ -89,7 +88,7 @@ const StaffDashboard = () => {
                 onClick={() => setActiveTab("AllReservations")}
                 className={`text-xl font-bold p-2 ${
                   activeTab === "AllReservations"
-                    ? "bg-orange-600 text-white rounded-md "
+                    ? "bg-primary1 text-white rounded-md "
                     : "text-gray-700"
                 }`}
               >
@@ -100,7 +99,7 @@ const StaffDashboard = () => {
                 onClick={() => setActiveTab("ViewMenu")}
                 className={`text-xl font-bold p-2 ${
                   activeTab === "ViewMenu"
-                    ? "bg-orange-600 text-white rounded-md"
+                    ? "bg-primary1 text-white rounded-md"
                     : "text-gray-700"
                 }`}
               >
@@ -118,7 +117,7 @@ const StaffDashboard = () => {
         return (
           <div>
             {/* Header Section */}
-            <div className="flex justify-between bg-gradient-to-r from-orange-400 to-orange-600 text-white p-6 rounded-lg shadow-md">
+            <div className="flex justify-between bg-gradient-to-r from-primary2 to-primary1 text-white p-6 rounded-lg shadow-md">
               <h2 className="text-3xl font-bold">Receptionist Dashboard</h2>
             </div>
 
@@ -128,7 +127,7 @@ const StaffDashboard = () => {
                 onClick={() => setActiveTabrep("AllReservations")}
                 className={`text-xl font-bold p-2 ${
                   activeTabrep === "AllReservations"
-                    ? "bg-orange-600 text-white rounded-md"
+                    ? "bg-primary1 text-white rounded-md"
                     : "text-gray-700"
                 }`}
               >
@@ -138,7 +137,7 @@ const StaffDashboard = () => {
                 onClick={() => setActiveTabrep("ViewRooms")}
                 className={`text-xl font-bold p-2 ${
                   activeTabrep === "ViewRooms"
-                    ? "bg-orange-600 text-white rounded-md"
+                    ? "bg-primary1 text-white rounded-md"
                     : "text-gray-700"
                 }`}
               >
@@ -155,7 +154,7 @@ const StaffDashboard = () => {
       case "housekeeping":
         return (
           <div>
-            <div className="flex justify-between bg-gradient-to-r from-orange-400 to-orange-600 text-white p-6 rounded-lg shadow-md">
+            <div className="flex justify-between bg-gradient-to-r from-primary2 to-primary1 text-white p-6 rounded-lg shadow-md">
               <h2 className="text-3xl font-bold">Housekeeping Dashboard</h2>
             </div>
           </div>
@@ -166,7 +165,7 @@ const StaffDashboard = () => {
         return (
           <div>
              {/* Header Section */}
-             <div className="flex justify-between bg-gradient-to-r from-orange-400 to-orange-600 text-white p-6 rounded-lg shadow-md">
+             <div className="flex justify-between bg-gradient-to-r from-primary2 to-primary1 text-white p-6 rounded-lg shadow-md">
               <h2 className="text-3xl font-bold">Chef Dashboard</h2>
             </div>
             <ViewMenu />

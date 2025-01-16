@@ -55,13 +55,13 @@ const Login = () => {
       <img src={logo} alt="Logo" style={{ width: "70px" }} />
     </div>
     <Link to={"/"}>
-      <div className="p-2 m-3 border border-solid rounded-md border-orange-500 ">
+      <div className="p-2 m-3 border border-solid rounded-md border-primary1 ">
         <IoMdHome style={{ fontSize: "30px", color: "orange" }} />
       </div>
     </Link>
   </div>
     <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl text-orange-500 font-bold text-center mb-6">Login</h2>
+      <h2 className="text-2xl text-primary1 font-bold text-center mb-6">Login</h2>
 
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -72,7 +72,7 @@ const Login = () => {
             value={userData.email}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary1"
           />
         </div>
         <div className="mb-4">
@@ -83,12 +83,12 @@ const Login = () => {
             value={userData.password}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary1"
           />
         </div>
         <button
           type="submit"
-          className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600"
+          className="w-full bg-primary1 text-white py-2 rounded-md hover:bg-primary1"
         >
           Login
         </button>

@@ -88,7 +88,7 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <main className="flex-1 ml-1/5 p-8 overflow-y-auto">
         {/* Welcome Banner */}
-        <div className="bg-gradient-to-r from-orange-400 to-orange-600 text-white p-6 rounded-lg shadow-md">
+        <div className="bg-gradient-to-r from-primary2 to-primary1 text-white p-6 rounded-lg shadow-md">
           <h2 className="text-3xl font-bold">Welcome, Admin!</h2>
           <p className="mt-2 text-sm">Here's a summary of your dashboard.</p>
         </div>
@@ -103,7 +103,7 @@ const AdminDashboard = () => {
             ) : roomError ? (
               <p className="text-red-500 mt-4">{roomError}</p>
             ) : (
-              <p className="text-4xl font-bold text-orange-600 mt-4">{totalRooms}</p>
+              <p className="text-4xl font-bold text-primary1 mt-4">{totalRooms}</p>
             )}
           </div>
 
@@ -115,7 +115,7 @@ const AdminDashboard = () => {
             ) : reservationError ? (
               <p className="text-red-500 mt-4">{reservationError}</p>
             ) : (
-              <p className="text-4xl font-bold text-orange-600 mt-4">
+              <p className="text-4xl font-bold text-primary1 mt-4">
                 {totalReservations}
               </p>
             )}
@@ -129,7 +129,7 @@ const AdminDashboard = () => {
             ) : paymentError ? (
               <p className="text-red-500 mt-4">{paymentError}</p>
             ) : (
-              <p className="text-4xl font-bold text-orange-600 mt-4">
+              <p className="text-4xl font-bold text-primary1 mt-4">
                 ${totalPayments.toFixed(2)}
               </p>
             )}
@@ -138,7 +138,7 @@ const AdminDashboard = () => {
           {/* Rooms Images Widget */}
           <div className="bg-white p-6 rounded-lg col-span-1 md:col-span-2 lg:col-span-2">
             <Link to={'/managerooms'}>
-            <h3 className="text-lg font-semibold text-orange-500">Rooms Details</h3>
+            <h3 className="text-lg font-semibold text-primary2">Rooms Details</h3>
             {loadingRooms ? (
               <p className="text-gray-500 mt-4">Loading...</p>
             ) : roomError ? (
@@ -169,7 +169,7 @@ const AdminDashboard = () => {
           {/* Menu Widget */}
           <div className="bg-white p-6 rounded-lg col-span-1 md:col-span-1 lg:col-span-1">
           <Link to={"/managemenu"}>
-              <h3 className="text-lg font-semibold text-orange-500">Menu Details</h3>
+              <h3 className="text-lg font-semibold text-primary2">Menu Details</h3>
               {loadingMenu ? (
                 <p className="text-gray-500 mt-4">Loading...</p>
               ) : menuError ? (
