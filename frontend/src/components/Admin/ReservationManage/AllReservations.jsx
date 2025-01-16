@@ -19,7 +19,7 @@ const AllReservations = () => {
   }, []);
 
   return (
-    <div className="p-6 min-h-screen">
+    <div className="p-6 ">
       <h1 className="text-2xl font-semibold mb-6 text-gray-700">All Reservations</h1>
       <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-orange-200 bg-white shadow-md rounded-lg">

@@ -75,14 +75,14 @@ const ViewRooms = () => {
     <div className=" content-center bg-gray-50">
       {/* Room Table */}
       <div className="overflow-x-auto">
-      <table className="min-w-full bg-white shadow-lg rounded-lg overflow-hidden">
-  <thead className="bg-orange-100 text-gray-800">
+      <table className="min-w-full bg-white overflow-hidden">
+  <thead className="bg-orange-50 text-gray-800">
     <tr>
-      <th className="px-6 py-4 text-sm font-semibold uppercase tracking-wide text-left">Room Name</th>
-      <th className="px-6 py-4 text-sm font-semibold uppercase tracking-wide text-left">Room No</th>
-      <th className="px-6 py-4 text-sm font-semibold uppercase tracking-wide text-left">Price</th>
-      <th className="px-6 py-4 text-sm font-semibold uppercase tracking-wide text-left">Image</th>
-      <th className="px-6 py-4 text-sm font-semibold uppercase tracking-wide text-left">Actions</th>
+      <th className="px-6 py-4 text-sm font-thin uppercase tracking-wide text-left">Room Name</th>
+      <th className="px-6 py-4 text-sm font-thin uppercase tracking-wide text-left">Room No</th>
+      <th className="px-6 py-4 text-sm font-thin uppercase tracking-wide text-left">Price</th>
+      <th className="px-6 py-4 text-sm font-thin uppercase tracking-wide text-left">Image</th>
+      <th className="px-6 py-4 text-sm font-thin uppercase tracking-wide text-left">Actions</th>
     </tr>
   </thead>
   <tbody className="divide-y divide-orange-200">
@@ -101,13 +101,13 @@ const ViewRooms = () => {
         <td className="px-6 py-4 flex space-x-2">
           <button
             onClick={() => handleEdit(room)}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300"
+            className="px-4 py-2 bg-blue-400 text-white rounded-md hover:bg-blue-500 transition duration-300"
           >
             Edit
           </button>
           <button
             onClick={() => handleDelete(room._id)}
-            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300"
+            className="px-4 py-2 bg-red-400 text-white rounded-md hover:bg-red-500 transition duration-300"
           >
             Delete
           </button>

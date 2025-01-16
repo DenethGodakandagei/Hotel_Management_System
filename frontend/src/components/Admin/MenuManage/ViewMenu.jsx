@@ -88,8 +88,8 @@ const ViewMenu = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">Menu Items</h1>
+    <div className=" mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <h1 className="text-2xl font-bold text-gray-800 mb-6">Menu Items</h1>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-orange-200 bg-white shadow-md rounded-lg">
           <thead className="bg-orange-50">
