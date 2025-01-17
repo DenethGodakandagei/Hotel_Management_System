@@ -38,7 +38,7 @@ const Rooms = () => {
   };
 
   return (
-    <div>
+    <div id="rooms">
       <div className="flex w-screen min-h-screen " id="room">
         <div className=" mx-auto ">
           <div className="w-full text-center mb-8 mt-4">

@@ -1,136 +1,143 @@
 "use client";
 
 import { Link } from "react-router-dom";
-import { useState , useEffect } from "react";
+import { useState } from "react";
 import logo from "../assets/logo.svg";
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from "../context/AuthContext";
 
 function NavBar() {
-  const [navbar, setNavbar] = useState(false);
-  
+  const [navbarOpen, setNavbarOpen] = useState(false);
   const { user } = useAuth();
 
-
-
   return (
-    <div>
-      <nav className="w-full  bg-[#fdfbf9]  top-0 left-0 right-0 z-10">
-        <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
-          <div>
-            <div className="font-medium flex flex-inline">
-            <div className="   items-center justify-between  md:block">
-            <img src={logo} style={{width : "70px"}}/>
-            </div>
+    <nav className="bg-[#fdfbf9] shadow-md fixed w-full z-10 top-0 left-0">
+      <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between h-16">
+        {/* Logo Section */}
+        <div className="flex items-center">
+          <img src={logo} alt="Logo" className="w-12 h-12" />
+          <span className="ml-3 text-xl font-semibold text-primary1">
+            LuxeStay
+          </span>
+        </div>
 
-            <span className="mt-6 text-primary1">LuxeStay</span>
-              {/* HAMBURGER BUTTON FOR MOBILE */}
-              <div className="md:hidden">
-                <button
-                  className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border"
-                  onClick={() => setNavbar(!navbar)}
-                >
-                  {navbar ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5"
-                      />
-                    </svg>
-                  )}
-                </button>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div
-              className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
-                navbar ? "p-12 md:p-0 block h-auto" : "hidden"
-              }`}
+        {/* Hamburger Menu */}
+        <button
+          className="text-gray-700 md:hidden focus:outline-none"
+          onClick={() => setNavbarOpen(!navbarOpen)}
+        >
+          {navbarOpen ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="2"
+              stroke="currentColor"
+              className="w-6 h-6"
             >
-              <ul className="h-screen md:h-auto items-center justify-center md:flex ">
-              <li className="pb-6 text-xl  text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
-                  <a href="#about">
-                    About
-                  </a>
-                </li>
-                <li className="pb-6 text-xl  text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
-                  <a href="#portfolio" >
-                  Rooms
-                  </a>
-                </li>
-                <li className="pb-6 text-xl text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
-                  <a href="#blog" >
-                    Explore
-                  </a>
-                </li>
-                <li className="pb-6 text-xl  text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
-                <Link to="/dining" className="block md:inline">
-                    Dining
-                 </Link>
-                </li>
-                <li className="pb-6 text-xl  text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
-                  <a href="#contact" >
-                    Contact
-                  </a>
-                </li>
-                {!user ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="2"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          )}
+        </button>
+
+        {/* Navigation Links */}
+        <div
+          className={`${
+            navbarOpen ? "block" : "hidden"
+          } md:block absolute md:relative bg-white lg:-top-1 md:bg-transparent top-16 left-0 w-full md:w-auto transition-all duration-300 md:transition-none z-50 shadow-lg md:shadow-none`}
+        >
+          <ul className="flex flex-col md:flex-row md:items-center md:space-x-6 mt-4 md:mt-0 p-6 md:p-0">
+            <li>
+              <a
+                href="#about"
+                className="text-primary1 text-lg hover:text-primary2 block md:inline-block"
+              >
+                About
+              </a>
+            </li>
+            <li>
+              <a
+                href="#rooms"
+                className="text-primary1 text-lg hover:text-primary2 block md:inline-block"
+              >
+                Rooms
+              </a>
+            </li>
+            <li>
+              <a
+                href="#gallery"
+                className="text-primary1 text-lg hover:text-primary2 block md:inline-block"
+              >
+                Gallery
+              </a>
+            </li>
+            <li>
+              <Link
+                to="/dining"
+                className="text-primary1 text-lg hover:text-primary2 block md:inline-block"
+              >
+                Dining
+              </Link>
+            </li>
+            <li>
+              <a
+                href="#contact"
+                className="text-primary1 text-lg hover:text-primary2 block md:inline-block"
+              >
+                Contact
+              </a>
+            </li>
+            {!user ? (
               <>
-                  <li className="pb-6 text-xl  text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
-                  <Link to="/signin" className="block md:inline">Signin</Link>
+                <li>
+                  <Link
+                    to="/signin"
+                    className="text-primary1 text-lg hover:text-primary2 block md:inline-block"
+                  >
+                    Signin
+                  </Link>
                 </li>
-                <li className="pb-6 text-xl  text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
+                <li>
                   <Link
                     to="/signup"
-                    className="block md:inline bg-primary1 text-white px-4 py-2 rounded-md hover:bg-primary2"
+                    className="text-white bg-primary1 px-4 py-2 rounded-md hover:bg-primary2 block md:inline-block"
                   >
                     Signup
                   </Link>
                 </li>
               </>
             ) : (
-              <div className="">
-             
-                <li className="pb-6 text-xl  text-primary1 py-2 md:px-6 text-center border-b-2 md:border-b-0">
+              <li>
                 <Link
-                    to="/dashboard"
-                    className="block md:inline bg-primary1 text-white px-4 py-2 rounded-md hover:bg-primary1"
-                  >
-               {user.name}
-               </Link>
-                </li>
-                
-              </div>
+                  to="/dashboard"
+                  className="text-white bg-primary1 px-4 py-2 rounded-md hover:bg-primary2 block md:inline-block"
+                >
+                  {user.name}
+                </Link>
+              </li>
             )}
-              </ul>
-            </div>
-          </div>
+          </ul>
         </div>
-        
-      </nav>
-    </div>
+      </div>
+    </nav>
   );
 }
 

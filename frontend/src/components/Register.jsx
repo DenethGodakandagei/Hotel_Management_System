@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import { IoMdHome } from "react-icons/io";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -66,6 +69,7 @@ const Register = () => {
         await axios.post("http://localhost:5000/api/staff", staffData);
 
         setSuccess("Staff registered successfully!");
+        navigate('/signin');
       }
 
       setError("");

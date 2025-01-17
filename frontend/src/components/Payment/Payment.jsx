@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import axios from "axios";
 
 // Load Stripe with the publishable key from environment variables
@@ -161,13 +162,13 @@ const Payment = ({ reservationData, onPaymentSuccess }) => {
       });
 
       if (response.status === 201) {
-        alert("Reservation created successfully!");
+        toast.success("Reservation created successfully!");
       }
       navigate("/dashboard");
     
     } catch (error) {
       console.error("Error creating reservation:", error);
-      alert("Error creating reservation.");
+      toast.error("Error creating reservation.");
     }
   };
 

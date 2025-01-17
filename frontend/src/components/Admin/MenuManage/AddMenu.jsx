@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const AddMenu = () => {
   const [name, setName] = useState('');
@@ -38,11 +39,11 @@ const AddMenu = () => {
           }
         }
       });
-      alert('Menu item created successfully');
+      toast.success('Menu item created successfully');
       setUploading(false);
     } catch (error) {
       console.error('Error creating menu item', error);
-      alert('Error creating menu item');
+      toast.error('Error creating menu item');
       setUploading(false);
     }
   };

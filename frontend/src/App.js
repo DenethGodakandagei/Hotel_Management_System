@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import Dashboard from './components/Dashboard';
 import ProtectedRoute from './Utils/ProtectedRoute';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+
 import AdminDashboard from './components/Admin/AdminDashboard';
 import ManageRooms from './components/Admin/RoomManage/ManageRooms';
 import Roominfo from './components/Roominfo';
@@ -21,6 +23,7 @@ import StaffDashboard from './components/Staff/StaffDashboard';
 function App() {
   return (
     <div className="App font-barlow">
+       <Toaster position="top-center" containerStyle={{ top: 60 }} />
          <AuthProvider>
       <BrowserRouter>
         <Routes>

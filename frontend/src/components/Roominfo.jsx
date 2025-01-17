@@ -11,6 +11,7 @@ import { useAuth } from '../context/AuthContext';
 import { FaArrowLeft , FaArrowRight  } from "react-icons/fa";
 import logo from "../assets/logo.svg";
 import { IoMdHome } from "react-icons/io";
+import toast from 'react-hot-toast';
 
 
 // Set up moment localizer for calendar
@@ -81,12 +82,12 @@ const Roominfo = () => {
 
   const handleBookNow = async () => {
     if (!user) {
-      alert("Please log in to make a reservation.");
+      toast.error("Please log in to make a reservation.");
       return;
     }
 
     if (!checkInDate || !checkOutDate) {
-      alert("Please select both check-in and check-out dates.");
+      toast.error("Please select both check-in and check-out dates.");
       return;
     }
 
@@ -103,7 +104,7 @@ const Roominfo = () => {
     });
 
     if (isOverlapping) {
-      alert("Selected dates are reserved");
+      toast.error("Selected dates are reserved");
       return;
     }
 
@@ -125,7 +126,7 @@ const Roominfo = () => {
       const response = await axios.post("http://localhost:5000/api/reservations", reservationData);
 
       if (response.status === 201) {
-        alert("Reservation created successfully!");
+        toast.success("Reservation created successfully!");
         // Update events after successful booking
         setEvents((prevEvents) => [
           ...prevEvents,
@@ -140,7 +141,7 @@ const Roominfo = () => {
       }
     } catch (error) {
       console.error("Error creating reservation:", error);
-      alert("Error creating reservation. Please try again.");
+      toast.error("Error creating reservation. Please try again.");
     }
   };
 

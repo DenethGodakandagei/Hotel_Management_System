@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import toast from 'react-hot-toast';
 
 const AddRooms = () => {
   const [formData, setFormData] = useState({
@@ -39,7 +40,7 @@ const AddRooms = () => {
           [name]: [...formData.images, ...selectedFiles],
         });
       } else {
-        alert("You can upload a maximum of 5 images.");
+        toast.error("You can upload a maximum of 5 images.");
       }
     } else {
       setFormData({ ...formData, [name]: value });
@@ -86,7 +87,7 @@ const AddRooms = () => {
         },
       });
 
-      alert("Room added successfully!");
+      toast.success("Room added successfully!");
       setFormData({
         roomNumber: "",
         roomType: "",
@@ -102,7 +103,7 @@ const AddRooms = () => {
       setRooms(updatedRooms.data);
     } catch (error) {
       const errorMessage = error.response?.data?.message || error.message || "Error adding room";
-      alert(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsUploading(false);
     }

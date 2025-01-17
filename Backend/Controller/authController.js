@@ -3,7 +3,7 @@ import { generateToken } from '../Utils/authUtils.js';
 
 // Register a new user
 const registerUser = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password, role ,phone, address} = req.body;
 
   //  user already exists
   const existingUser = await User.findOne({ email });
@@ -16,6 +16,8 @@ const registerUser = async (req, res) => {
     name,
     email,
     password, 
+    phone,
+    address,
     role: role || 'guest',  // Default to 'guest'
   });
 
@@ -35,6 +37,8 @@ const registerUser = async (req, res) => {
         name: savedUser.name,
         email: savedUser.email,
         role: savedUser.role,
+        phone: savedUser.phone,
+        address: savedUser.address,
       },
     });
   } catch (error) {
@@ -76,6 +80,8 @@ const loginUser = async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      phone: user.phone,
+      address: user.address,
     },
   });
 };
