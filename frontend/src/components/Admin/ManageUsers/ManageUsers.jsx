@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 import DashboardNavigater from '../DashboardNavigater';
 
 const ManageUsers = () => {
@@ -11,7 +12,7 @@ const ManageUsers = () => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/users');
-        setUsers(response.data.data); 
+        setUsers(response.data.data);
         setError('');
       } catch (err) {
         console.error('Error fetching users:', err);
@@ -21,6 +22,19 @@ const ManageUsers = () => {
 
     fetchUsers();
   }, []);
+
+  // Delete user function
+  const deleteUser = async (id) => {
+    try {
+      const response = await axios.delete(`http://localhost:5000/api/users/${id}`);
+      // After successful deletion, remove the user from the state
+      setUsers(users.filter(user => user._id !== id));
+      toast.success('User deleted successfully!');
+    } catch (err) {
+      console.error('Error deleting user:', err);
+      toast.error('Unable to delete the user. Please try again later.');
+    }
+  };
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -58,7 +72,10 @@ const ManageUsers = () => {
                       <td className="px-6 py-4 text-sm text-gray-700">{user.role}</td>
                       <td className="px-6 py-4 text-sm text-gray-700">{user.phone}</td>
                       <td className="px-6 py-4 text-sm">
-                        <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none ml-2">
+                        <button
+                          onClick={() => deleteUser(user._id)}  // Trigger delete
+                          className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none ml-2"
+                        >
                           Delete
                         </button>
                       </td>

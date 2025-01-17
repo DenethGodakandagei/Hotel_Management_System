@@ -58,3 +58,32 @@ export const editUser = async (req, res) => {
     });
   }
 };
+
+// Delete user
+export const deleteUser = async (req, res) => {
+    const { id } = req.params;  // Get user ID from the request params
+  
+    try {
+      // Find and delete the user by ID
+      const deletedUser = await User.findByIdAndDelete(id);
+  
+      if (!deletedUser) {
+        return res.status(404).json({
+          success: false,
+          message: 'User not found',
+        });
+      }
+  
+      res.status(200).json({
+        success: true,
+        message: 'User deleted successfully',
+        data: deletedUser,  // Send the deleted user data as a confirmation
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Error deleting user',
+        error: error.message,
+      });
+    }
+  };
