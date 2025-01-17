@@ -12,6 +12,7 @@ import reservationRoutes from './Routes/resevationRoutes.js';
 import paymentRoutes  from './Routes/PaymentRoutes.js';
 import menuRoutes from './Routes/menuRoutes.js';
 import staffRoutes from './Routes/StaffRoutes.js';
+import userRoutes from './Routes/userRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -31,6 +32,7 @@ app.use('/api/reservations', reservationRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use('/api/menu', menuRoutes);
 app.use('/api/staff', staffRoutes);
+app.use('/api/users', userRoutes);
 
 const PORT = process.env.PORT || 5000;
 
