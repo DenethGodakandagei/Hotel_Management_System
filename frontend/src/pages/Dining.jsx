@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import NavBar from '../components/Navbar';
+import logo from "../assets/logo.svg";
+import { IoMdHome } from "react-icons/io";
+import { Link } from 'react-router-dom';
 
 const Dining = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -20,8 +22,22 @@ const Dining = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <NavBar />
+    <div>
+    <div className="flex items-center justify-between w-full p-3">
+    <div className='flex '>
+      <img src={logo} alt="Logo" style={{ width: "70px" }} />
+      <span className=" pt-5 text-xl font-semibold text-primary1">
+            LuxeStay
+          </span>
+    </div>
+    <Link to={"/"}>
+      <div className="p-2 m-3 border border-solid rounded-md border-primary1 ">
+        <IoMdHome style={{ fontSize: "30px", color: "orange" }} />
+      </div>
+    </Link>
+  </div>
+    <div className="min-h-screen ">
+    
       <div className="p-8">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">Our Menu</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -47,6 +63,7 @@ const Dining = () => {
           ))}
         </div>
       </div>
+    </div>
     </div>
   );
 };

@@ -51,3 +51,19 @@ body {
   letter-spacing: 10px;
   border: solid 1px rgb(255, 255, 255);
 }
+
+/* calander*/
+
+.calendar-container {
+  font-family: 'Roboto', sans-serif;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.calendar-event {
+  background-color: #34d399;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}

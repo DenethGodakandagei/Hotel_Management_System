@@ -11,7 +11,7 @@ export const About = () => {
               <div className="grid items-center gap-16 lg:grid-cols-2">
                 <div className="mt-12 lg:mt-0">
                   <h1 className="mb-12 text-5xl font-bold tracking-tight  md:text-6xl xl:text-7xl">
-                    <span className="text-blue reveal">
+                    <span className="text-primary1 reveal">
                       Welcome to LuxeStay Resort
                     </span>
                   </h1>

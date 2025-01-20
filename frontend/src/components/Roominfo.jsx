@@ -79,7 +79,18 @@ const Roominfo = () => {
   const handlePrevImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? room?.images.length - 1 : prevIndex - 1));
   };
-
+  const CustomToolbar = (toolbar) => (
+    <div className="flex justify-between items-center p-56 bg-gray-200 rounded-lg">
+      <button onClick={() => toolbar.onNavigate('PREV')} className="text-primary1">
+        Prev
+      </button>
+      <h2 className="text-lg font-bold">{toolbar.label}</h2>
+      <button onClick={() => toolbar.onNavigate('NEXT')} className="text-blue">
+        Next
+      </button>
+    </div>
+  );
+  
   const handleBookNow = async () => {
     if (!user) {
       toast.error("Please log in to make a reservation.");
@@ -231,7 +242,7 @@ const Roominfo = () => {
         </div>
       </div>
 
-      <div className="max-w-screen-xl w-full bg-white rounded-2xl shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 gap-12 p-8 mx-auto items-center justify-center">
+      <div className="max-w-screen-xl w-full bg-white rounded-2xl shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 p-8 mx-auto items-center justify-center">
   {/* Room Details */}
   <div className="flex flex-col items-start space-y-8">
     <div className="w-full bg-orange-50 p-8 rounded-2xl shadow-lg">
@@ -289,7 +300,7 @@ const Roominfo = () => {
   </div>
 
   {/* Calendar */}
-  <div className="w-full bg-white shadow-lg rounded-xl">
+  <div className="w-full bg-white rounded-xl pl-4">
     <h3 className="text-2xl font-semibold text-center mb-6 text-orange-800">Room Availability</h3>
     <div className="h-full">
       <Calendar
@@ -297,9 +308,11 @@ const Roominfo = () => {
         events={events}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 500 }}
+        style={{ height: 400 }}
         dayPropGetter={dayPropGetter}
-        popup
+        
+          toolbar={CustomToolbar} 
+        
       />
     </div>
   </div>
