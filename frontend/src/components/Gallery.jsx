@@ -1,42 +1,62 @@
-import React from 'react'
+import React from 'react';
 import { Data } from '../assets/Gallery/Data.js';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
+
 export const Gallery = () => {
-    const slideLeft = () => {
-        var slider = document.getElementById('slider');
-        slider.scrollLeft = slider.scrollLeft - 500;
-      };
-    
-      const slideRight = () => {
-        var slider = document.getElementById('slider');
-        slider.scrollLeft = slider.scrollLeft + 500;
-      };
+  const slide = (direction) => {
+    const slider = document.getElementById('slider');
+    const scrollAmount = 500;
+    slider.scrollLeft += direction === 'left' ? -scrollAmount : scrollAmount;
+  };
+
   return (
-    <div>
-          <div class="w-full pl-5 lg:pl-2 mb-4 mt-4" id='gallery'>
-            <h1 class="text-3xl lg:text-4xl text-primary1 font-extrabold text-center p-12">
-             Our Gallery
-            </h1>
-          </div>
-      <div className='relative flex items-center over reveal'>
-        <MdChevronLeft className='opacity-50 cursor-pointer hover:opacity-150' onClick={slideLeft} size={40} />
+    <div id='gallery' className="gallery-container  py-8">
+      {/* Header Section */}
+      <div className="text-center mb-6 pt-10">
+        <h1 className="text-3xl lg:text-4xl font-bold text-primary1">
+          Our Gallery
+        </h1>
+        <p className="text-gray-500 mt-2 text-lg lg:text-xl">
+          Explore moments captured beautifully.
+        </p>
+      </div>
+
+      {/* Gallery Slider */}
+      <div className="relative flex items-center group">
+        {/* Left Chevron */}
+        <MdChevronLeft
+          className="hidden group-hover:block absolute left-4 z-10 bg-white p-2 rounded-full shadow-md cursor-pointer text-gray-600 hover:text-orange-600 hover:scale-110 transition-all duration-300"
+          onClick={() => slide('left')}
+          size={40}
+        />
+
+        {/* Slider */}
         <div
-          id='slider'
-          className='w-full h-full overflow-x-scroll overflow-y-hidden scroll whitespace-nowrap scroll-smooth scrollbar-hide '
+          id="slider"
+          className="w-full h-full overflow-hidden whitespace-nowrap scroll-smooth relative rounded-lg "
         >
-          {Data.map((item) => (
-            <img
-              className='w-[280px] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300'
-              src={item.img}
-              alt='/'
-            />
+          {Data.map((item, index) => (
+            <div
+              key={index}
+              className="inline-block w-[300px] mx-4  rounded-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-300 "
+            >
+              <img
+                className="w-full h-[200px] object-cover"
+                src={item.img}
+                alt={`Gallery item ${index + 1}`}
+              />
+             
+            </div>
           ))}
         </div>
-        <MdChevronRight className='opacity-50 cursor-pointer hover:opacity-100' onClick={slideRight} size={40} />
+
+        {/* Right Chevron */}
+        <MdChevronRight
+          className="hidden group-hover:block absolute right-4 z-10 bg-white p-2 rounded-full shadow-md cursor-pointer text-gray-600 hover:text-orange-600 hover:scale-110 transition-all duration-300"
+          onClick={() => slide('right')}
+          size={40}
+        />
       </div>
-      <div className=' m-12 p-6' ></div>
-      
-        
     </div>
-  )
-}
+  );
+};

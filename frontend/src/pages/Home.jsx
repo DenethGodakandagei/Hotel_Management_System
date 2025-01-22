@@ -7,15 +7,17 @@ import { Contact } from '../components/Contact'
 import { Footer } from '../components/Footer'
 import { Features } from '../components/Features'
 import { Gallery } from '../components/Gallery'
+import Dining from '../components/Dining'
 
 const Home = () => {
   return (
     <div>
-      <Navbar />
+     <Navbar />
       <Header />
       <About />
       <Rooms />
       <Features />
+      <Dining />
       <Gallery />
       <Contact />
       <Footer />

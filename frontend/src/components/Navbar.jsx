@@ -1,13 +1,19 @@
 "use client";
 
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import logo from "../assets/logo.svg";
 import { useAuth } from "../context/AuthContext";
 
 function NavBar() {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const { user } = useAuth();
+  const location = useLocation();
+
+  // Automatically close the navbar when navigating to a new page
+  useEffect(() => {
+    setNavbarOpen(false);
+  }, [location.pathname]);
 
   return (
     <nav className="bg-[#fdfbf9] shadow-md fixed w-full z-10 top-0 left-0">
@@ -90,12 +96,12 @@ function NavBar() {
               </a>
             </li>
             <li>
-              <Link
-                to="/dining"
+              <a
+                href="#dining"
                 className="text-primary1 text-lg hover:text-primary2 block md:inline-block"
               >
                 Dining
-              </Link>
+              </a>
             </li>
             <li>
               <a

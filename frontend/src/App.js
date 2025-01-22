@@ -14,10 +14,14 @@ import Roominfo from './components/Roominfo';
 import { AuthProvider } from './context/AuthContext';
 import ManageReservation from './components/Admin/ReservationManage/ManageReservation';
 import ManageMenu from './components/Admin/MenuManage/ManageMenu';
-import Dining from './pages/Dining';
+import Dining from './components/Dining';
 import ManageUsers from './components/Admin/ManageUsers/ManageUsers';
 import AdminSettings from './components/Admin/AdminSettings/AdminSettings';
 import StaffDashboard from './components/Staff/StaffDashboard';
+import ExtendRooms from './components/ExtendRooms';
+import NavBar from './components/Navbar';
+import { ExtendDining } from './components/ExtendDining';
+
 
 
 function App() {
@@ -26,12 +30,16 @@ function App() {
        <Toaster position="top-center" containerStyle={{ top: 60 }} />
          <AuthProvider>
       <BrowserRouter>
+      
         <Routes>
+       
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/:id" element={<Roominfo />} />
-          <Route path="/dining" element={<Dining />} />
+          <Route path="/dining" element={<ExtendDining />} />
+          <Route path="/rooms" element={<ExtendRooms />} />
+          
           <Route
             path="/dashboard"
             element={<ProtectedRoute element={<Dashboard />} />}

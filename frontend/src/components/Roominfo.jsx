@@ -79,17 +79,7 @@ const Roominfo = () => {
   const handlePrevImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? room?.images.length - 1 : prevIndex - 1));
   };
-  const CustomToolbar = (toolbar) => (
-    <div className="flex justify-between items-center p-56 bg-gray-200 rounded-lg">
-      <button onClick={() => toolbar.onNavigate('PREV')} className="text-primary1">
-        Prev
-      </button>
-      <h2 className="text-lg font-bold">{toolbar.label}</h2>
-      <button onClick={() => toolbar.onNavigate('NEXT')} className="text-blue">
-        Next
-      </button>
-    </div>
-  );
+
   
   const handleBookNow = async () => {
     if (!user) {
@@ -299,23 +289,69 @@ const Roominfo = () => {
     </div>
   </div>
 
-  {/* Calendar */}
-  <div className="w-full bg-white rounded-xl pl-4">
-    <h3 className="text-2xl font-semibold text-center mb-6 text-orange-800">Room Availability</h3>
-    <div className="h-full">
+ 
+{/* Calendar */}
+<div className="w-full bg-white rounded-xl s p-6">
+  <h3 className="text-2xl font-semibold text-center mb-4 text-orange-800">Room Availability</h3>
+  <div className="flex justify-center">
+    <div className="h-full w-full max-w-3xl overflow-hidden rounded-lg border border-gray-300">
       <Calendar
         localizer={localizer}
         events={events}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 400 }}
+        style={{
+          height: 500,
+          width: '100%',
+          padding: 0,
+          backgroundColor: '#fff',
+        }}
+        toolbar={true}
+        components={{
+          toolbar: (props) => (
+            <div className="flex items-center justify-between bg-gray-100 px-4 py-2 border-b">
+              <div className="flex gap-2">
+                <button
+                  onClick={() => props.onNavigate('PREV')}
+                
+                >
+                  Back
+                </button>
+                <button
+                  onClick={() => props.onNavigate('TODAY')}
+                 
+                >
+                  Today
+                </button>
+                <button
+                  onClick={() => props.onNavigate('NEXT')}
+                 
+                >
+                  Next
+                </button>
+              </div>
+              <h3 className="font-bold text-gray-900">{props.label}</h3>
+              <div className="flex gap-2">
+                {['month', 'week'].map((view) => (
+                  <button
+                    key={view}
+                    onClick={() => props.onView(view)}
+                    className={`px-3 py-1 rounded `}
+                  >
+                    {view.charAt(0).toUpperCase() + view.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ),
+        }}
         dayPropGetter={dayPropGetter}
-        
-          toolbar={CustomToolbar} 
-        
       />
     </div>
   </div>
+</div>
+
+
 </div>
 
 

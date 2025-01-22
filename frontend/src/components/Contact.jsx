@@ -3,7 +3,7 @@ import React from "react";
 export const Contact = () => {
   return (
     <div>
-      <div class="container my-24 mx-auto md:px-6" id="contact">
+      <div class="container my-24 mx-auto md:px-6 pt-16" id="contact">
         <h1 class="text-3xl lg:text-4xl text-primary1 font-extrabold text-center p-6">
           Explore our current promotions and exclusive deals to make the most of
           your stay with us.

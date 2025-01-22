@@ -1,45 +1,61 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import logo from "../assets/logo.svg";
+import { IoMdHome } from "react-icons/io";
 import axios from "axios";
 
-const Rooms = () => {
-  const [rooms, setRooms] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
-
-  // Fetch rooms from the backend
-  const fetchRooms = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/room/");
-      setRooms(response.data);
-      setLoading(false);
-    } catch (err) {
-      setError("Failed to fetch rooms. Please try again later.");
-      setLoading(false);
+const ExtendRooms = () => {
+    const [rooms, setRooms] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+  
+    // Fetch rooms from the backend
+    const fetchRooms = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/room/");
+        setRooms(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch rooms. Please try again later.");
+        setLoading(false);
+      }
+    };
+  
+    useEffect(() => {
+      fetchRooms();
+    }, []);
+  
+    if (loading) {
+      return <div className="text-center p-10 text-xl">Loading rooms...</div>;
     }
-  };
-
-  useEffect(() => {
-    fetchRooms();
-  }, []);
-
-  if (loading) {
-    return <div className="text-center p-10 text-xl">Loading rooms...</div>;
-  }
-
-  if (error) {
-    return <div className="text-center p-10 text-red-500">{error}</div>;
-  }
-
-  // Navigate to RoomInfo with room data
-  const handleBookNow = (room) => {
-    navigate(`/${room._id}`, { state: { room } });
-  };
-
+  
+    if (error) {
+      return <div className="text-center p-10 text-red-500">{error}</div>;
+    }
+  
+    // Navigate to RoomInfo with room data
+    const handleBookNow = (room) => {
+      navigate(`/${room._id}`, { state: { room } });
+    };
+  
   return (
     <div id="rooms">
-      <div className="flex w-screen min-h-screen pt-14">
+         <div className="flex items-center justify-between w-full p-3">
+       <div className='flex '>
+         <img src={logo} alt="Logo" style={{ width: "70px" }} />
+         <span className=" pt-5 text-xl font-semibold text-primary1">
+               LuxeStay
+             </span>
+       </div>
+       <Link to={"/"}>
+         <div className="p-2 m-3 border border-solid rounded-md border-primary1 ">
+           <IoMdHome style={{ fontSize: "30px", color: "orange" }} />
+         </div>
+       </Link>
+     </div>
+      <div className="flex w-screen min-h-screen " id="room">
         <div className=" mx-auto ">
           <div className="w-full text-center mb-8 mt-4">
             <h1 className="text-4xl font-extrabold text-primary1">
@@ -50,7 +66,7 @@ const Rooms = () => {
             </p>
           </div>
       <div className="flex flex-wrap justify-center gap-6">
-  {rooms.slice(0, 3).map((room) => (
+  {rooms.map((room) => (
     <div
       key={room._id}
       className="max-w-sm w-full border border-gray-200 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300"
@@ -117,19 +133,11 @@ const Rooms = () => {
     </div>
   ))}
 </div>
-<div className=" flex justify-center p-10  ">
-  <Link to='/rooms' >
-  <button className="border border-primary1 text-primary1 p-2 rounded-md">
-    Load More
-    </button>
-    </Link>
-    </div>
-        </div>
-        
-      </div>
-      
-    </div>
-  );
-};
 
-export default Rooms;
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default ExtendRooms
