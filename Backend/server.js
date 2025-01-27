@@ -13,6 +13,7 @@ import paymentRoutes  from './Routes/PaymentRoutes.js';
 import menuRoutes from './Routes/menuRoutes.js';
 import staffRoutes from './Routes/StaffRoutes.js';
 import userRoutes from './Routes/userRoutes.js';
+import emailRoutes from './Routes/emailRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -33,6 +34,7 @@ app.use("/api/payments", paymentRoutes);
 app.use('/api/menu', menuRoutes);
 app.use('/api/staff', staffRoutes);
 app.use('/api/users', userRoutes);
+app.use("/api/send-email", emailRoutes);
 
 const PORT = process.env.PORT || 5000;
 

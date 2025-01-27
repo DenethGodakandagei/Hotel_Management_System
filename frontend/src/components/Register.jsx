@@ -55,21 +55,11 @@ const Register = () => {
   return (
     <div>
       <div className="flex items-center justify-between w-full p-3">
-          <div className='flex '>
-            <img src={logo} alt="Logo" style={{ width: "70px" }} />
-            <span className=" pt-5 text-xl font-semibold text-primary1">
-                  LuxeStay
-                </span>
-          </div>
-          <Link to={"/"}>
-            <div className="p-2 m-3 border border-solid rounded-md border-primary1 ">
-              <IoMdHome style={{ fontSize: "30px", color: "orange" }} />
-            </div>
-          </Link>
-        </div>
-      <div className="flex items-center justify-between w-full">
-        <div>
+        <div className='flex '>
           <img src={logo} alt="Logo" style={{ width: "70px" }} />
+          <span className=" pt-5 text-xl font-semibold text-primary1">
+            LuxeStay
+          </span>
         </div>
         <Link to={"/"}>
           <div className="p-2 m-3 border border-solid rounded-md border-primary1 ">
@@ -77,6 +67,7 @@ const Register = () => {
           </div>
         </Link>
       </div>
+
       <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl text-primary1 font-bold text-center mb-6">
           Register
@@ -157,13 +148,13 @@ const Register = () => {
             {success && <div className="text-green-500 text-sm">{success}</div>}
           </div>
           <div className="flex items-center justify-center mt-6">
-        <Link
-          to="/signin"
-          className="inline-flex items-center text-xs font-thin text-center text-gray-500 hover:text-gray-700 dark:text-gray-900 dark:hover:text-black"
-        >
-          <span className="ml-2">Already have an account ?</span>
-        </Link>
-      </div>
+            <Link
+              to="/signin"
+              className="inline-flex items-center text-xs font-thin text-center text-gray-500 hover:text-gray-700 dark:text-gray-900 dark:hover:text-black"
+            >
+              <span className="ml-2">Already have an account ?</span>
+            </Link>
+          </div>
         </form>
       </div>
     </div>
