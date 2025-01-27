@@ -26,7 +26,7 @@ const AddRooms = () => {
         setRooms(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching rooms:", error);
+        console.log("Error fetching rooms:", error);
       });
   }, []);
 
@@ -155,16 +155,26 @@ const AddRooms = () => {
             />
           </div>
           <div>
-            <label className="block font-medium mb-1">Room Type</label>
-            <input
-              type="text"
-              name="roomType"
-              value={formData.roomType}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-              required
-            />
-          </div>
+  <label className="block font-medium mb-1">Room Type</label>
+  <select
+    name="roomType"
+    value={formData.roomType}
+    onChange={handleChange}
+    className="w-full p-2 border rounded"
+    required
+  >
+    <option value="" disabled>
+      Select a room type
+    </option>
+    <option value="single">Single Room</option>
+    <option value="double">Double Room</option>
+    <option value="twin">Twin Room</option>
+    <option value="suite">Suite</option>
+    <option value="deluxe">Deluxe Room</option>
+    <option value="family">Family Room</option>
+  </select>
+</div>
+
           <div>
             <label className="block font-medium mb-1">Price Per Night</label>
             <input

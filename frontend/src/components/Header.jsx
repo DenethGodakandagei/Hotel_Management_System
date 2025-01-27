@@ -8,8 +8,11 @@ const Header = () => {
         <span className=" text-white text-[35px] topic p-2  m-3 sm:text-[55px] font-semibold  border ">
           {" "}
           LuxeStay Beach Resort & Spa
+          
         </span>
+       
       </div>
+      
     </div>
   </section>
   )

@@ -72,9 +72,10 @@ const ViewRooms = () => {
   };
 
   return (
-    <div className=" content-center bg-gray-50">
+    <div className=" content-center  p-4">
       {/* Room Table */}
       <div className="overflow-x-auto">
+      <h1 className="text-2xl font-semibold mb-6 text-gray-700">Rooms List</h1>
       <table className="min-w-full bg-white overflow-hidden">
   <thead className="bg-orange-50 text-gray-800">
     <tr>
@@ -101,7 +102,7 @@ const ViewRooms = () => {
         <td className="px-6 py-4 flex space-x-2">
           <button
             onClick={() => handleEdit(room)}
-            className="px-4 py-2 bg-blue-400 text-white rounded-md hover:bg-blue-500 transition duration-300"
+            className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-blue-500 transition duration-300"
           >
             Edit
           </button>
@@ -168,7 +169,7 @@ const ViewRooms = () => {
               </div>
               <button
                 type="submit"
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
+                className="px-4 py-2 bg-primary1 text-white rounded hover:bg-blue-600 transition duration-300"
               >
                 Save Changes
               </button>

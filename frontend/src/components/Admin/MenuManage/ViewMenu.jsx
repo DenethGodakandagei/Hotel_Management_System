@@ -8,6 +8,8 @@ const ViewMenu = () => {
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false); // State for opening/closing the modal
   const [currentItem, setCurrentItem] = useState(null); // State to hold the item being edited
+  const [isUpdating, setIsUpdating] = useState(false); 
+  const [refreshData, setRefreshData] = useState(false);
   const navigate = useNavigate();
 
   // Fetch menu data from the API
@@ -24,7 +26,7 @@ const ViewMenu = () => {
     };
 
     fetchMenuItems();
-  }, []);
+  }, [refreshData]);
 
   const handleEdit = (item) => {
     setCurrentItem(item); // Set the current item to be edited
@@ -51,21 +53,16 @@ const ViewMenu = () => {
   const handleUpdateItem = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(
+      await axios.put(
         `http://localhost:5000/api/menu/${currentItem._id}`,
         currentItem
       );
-      setMenuItems(
-        menuItems.map((item) =>
-          item._id === currentItem._id ? response.data : item
-        )
-      ); // Update the item in state
+      setRefreshData((prev) => !prev); // Toggle refreshData to trigger re-fetch
       handleModalClose(); // Close the modal after updating
     } catch (err) {
       setError("Failed to update item");
     }
   };
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCurrentItem({ ...currentItem, [name]: value });
@@ -130,7 +127,7 @@ const ViewMenu = () => {
                   {item.category}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {item.imageUrl.length > 0 ? (
+                  {item.imageUrl && item.imageUrl.length > 0 ? (
                     <img
                       src={item.imageUrl[0]}
                       alt={item.name}
@@ -140,6 +137,7 @@ const ViewMenu = () => {
                     <span className="text-gray-400">No Image</span>
                   )}
                 </td>
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <button
                     onClick={() => handleEdit(item)}
@@ -162,95 +160,103 @@ const ViewMenu = () => {
 
       {/* Edit Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Edit Menu Item
-            </h2>
-            <form onSubmit={handleUpdateItem}>
-              <div className="mb-4">
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  value={currentItem.name}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="description"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Description
-                </label>
-                <input
-                  type="text"
-                  name="description"
-                  id="description"
-                  value={currentItem.description}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="price"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Price
-                </label>
-                <input
-                  type="number"
-                  name="price"
-                  id="price"
-                  value={currentItem.price}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="category"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Category
-                </label>
-                <input
-                  type="text"
-                  name="category"
-                  id="category"
-                  value={currentItem.category}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                />
-              </div>
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  onClick={handleModalClose}
-                  className="px-4 py-2 bg-gray-500 text-white rounded-md mr-4"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md"
-                >
-                  Save Changes
-                </button>
-              </div>
-            </form>
-          </div>
+  <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
+    <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+        Edit Menu Item
+      </h2>
+      {isUpdating ? (
+        <div className="flex justify-center items-center">
+          <div className="loader border-t-4 border-blue-500 rounded-full w-8 h-8 animate-spin"></div>
+          <span className="ml-4 text-gray-600">Saving changes...</span>
         </div>
+      ) : (
+        <form onSubmit={handleUpdateItem}>
+          <div className="mb-4">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              value={currentItem.name}
+              onChange={handleInputChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Description
+            </label>
+            <input
+              type="text"
+              name="description"
+              id="description"
+              value={currentItem.description}
+              onChange={handleInputChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="price"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Price
+            </label>
+            <input
+              type="number"
+              name="price"
+              id="price"
+              value={currentItem.price}
+              onChange={handleInputChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="category"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Category
+            </label>
+            <input
+              type="text"
+              name="category"
+              id="category"
+              value={currentItem.category}
+              onChange={handleInputChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            />
+          </div>
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={handleModalClose}
+              className="px-4 py-2 bg-gray-500 text-white rounded-md mr-4"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-primary1 text-white rounded-md"
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
       )}
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

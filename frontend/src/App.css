@@ -35,7 +35,11 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  object-fit: cover; /* Ensures the image fully covers the container */
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%,); /* Creates a modern diagonal shape */
 }
+
+
 .caption {
   position: absolute;
   left: 0;
