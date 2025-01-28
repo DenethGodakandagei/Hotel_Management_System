@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation ,useParams } from "react-router-dom";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -29,8 +29,13 @@ const Roominfo = () => {
   const { user } = useAuth();
 
   const location = useLocation();
-  const room = location.state?.room;
+  const room = location.state?.room ||  {};
+  const { roomId } = useParams();
              
+  if (!location.state?.room) {
+    console.log(`Fetching room data for ID: ${roomId}`);
+   
+  }
   useEffect(() => {
     if (room && room._id) {  // Ensure room and room._id are valid before proceeding
       const fetchReservations = async () => {
@@ -176,9 +181,6 @@ const Roominfo = () => {
       </div>
     );
   };
-
- 
-
   return (
     <div className=" w-screen min-h-screen items-center justify-center px-6 pt-0 py-12">
        <div className=" flex items-center justify-between w-full">
@@ -196,8 +198,8 @@ const Roominfo = () => {
         <div className="relative group w-full">
           <img
             className="w-full h-80 md:h-96 object-cover rounded-lg transition-all duration-500 transform hover:scale-105"
-            src={room.images[currentImageIndex]}
-            alt={room.roomType}
+            src={room?.images?.[currentImageIndex] || ''} 
+            alt={room?.roomType || 'Room'}
           />
           <div className="absolute inset-0 flex justify-between items-center px-4">
             <button

@@ -34,7 +34,7 @@ const Rooms = () => {
 
   // Navigate to RoomInfo with room data
   const handleBookNow = (room) => {
-    navigate(`/${room._id}`, { state: { room } });
+    navigate(`/rooms/${room._id}`, { state: { room } });
   };
 
   return (

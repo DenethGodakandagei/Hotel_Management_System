@@ -32,10 +32,9 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<Login />} />
             <Route path="/signup" element={<Register />} />
-            <Route path="/:id" element={<Roominfo />} />
+            <Route path="/rooms/:id" element={<Roominfo />} />
             <Route path="/dining" element={<ExtendDining />} />
             <Route path="/rooms" element={<ExtendRooms />} />
-
             <Route
               path="/dashboard"
               element={<ProtectedRoute element={<Dashboard />} />}
@@ -53,6 +52,19 @@ function App() {
             <Route path="/managemenu" element={<ManageMenu />} />
             <Route path="/manageusers" element={<ManageUsers />} />
             <Route path="/settings" element={<AdminSettings />} />
+            -
+            <Route
+              path="*"
+              element={
+                <>
+                  <div className="text-center mt-20">
+                    <h1 className="text-4xl font-bold">404</h1>
+                    <p className="text-lg my-4">Page not found</p>
+                   
+                  </div>{" "}
+                </>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
