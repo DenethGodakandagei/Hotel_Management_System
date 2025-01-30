@@ -112,40 +112,40 @@ function NavBar() {
               </a>
             </li>
             {!user ? (
-  <>
-    <li>
-      <Link
-        to="/signin"
-        className="text-primary1 text-lg hover:text-primary2 block md:inline-block"
-      >
-        Signin
-      </Link>
-    </li>
-    <li>
-      <Link
-        to="/signup"
-        className="text-white bg-primary1 px-4 py-2 rounded-md hover:bg-primary2 block md:inline-block"
-      >
-        Signup
-      </Link>
-    </li>
-  </>
-) : (
-  <li>
-    <Link
-      to={
-        user.role === "admin"
-          ? "/admin/dashboard"
-          : user.role === "staff"
-          ? "/staff/dashboard"
-          : "/dashboard"
-      }
-      className="text-white bg-primary1 px-4 py-2 rounded-md hover:bg-primary2 block md:inline-block"
-    >
-      {user.name}
-    </Link>
-  </li>
-)}
+              <>
+                <li>
+                  <Link
+                    to="/signin"
+                    className="text-primary1 text-lg hover:text-primary2 block md:inline-block"
+                  >
+                    Signin
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/signup"
+                    className="text-white bg-primary1 px-4 py-2 rounded-md hover:bg-primary2 block md:inline-block"
+                  >
+                    Signup
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <li>
+                <Link
+                  to={
+                    user.role === "admin"
+                      ? "/admin/dashboard"
+                      : user.role === "staff"
+                        ? "/staff/dashboard"
+                        : "/dashboard"
+                  }
+                  className="text-white bg-primary1 px-4 py-2 rounded-md hover:bg-primary2 block md:inline-block"
+                >
+                  {user.name}
+                </Link>
+              </li>
+            )}
 
 
           </ul>
