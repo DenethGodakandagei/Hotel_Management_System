@@ -46,7 +46,7 @@ const ManageRooms = () => {
           {isAddRoomModalOpen && (
             <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
               <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 max-h-[80vh] overflow-y-auto">
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">Add New Room</h3>
+             
                 <AddRooms />
                 <div className="mt-4 flex justify-end">
                   <button

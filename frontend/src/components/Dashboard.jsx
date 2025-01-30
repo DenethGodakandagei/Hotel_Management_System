@@ -21,6 +21,16 @@ const Dashboard = () => {
   const handleEdit = () => {
     setEditMode(!editMode); // Toggle edit mode
   };
+  const validatePhoneNumber = (phone) => {
+    // Sri Lanka phone number pattern
+    const sriLankaPhoneRegex = /^(?:\+94|0)(?:7[0125678]\d{7}|[1-9]\d{8})$/;
+
+    if (!sriLankaPhoneRegex.test(phone)) {
+      setError("Invalid  phone number");
+    } else {
+      setError("");
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,9 +38,17 @@ const Dashboard = () => {
       ...prevUserData,
       [name]: value,
     }));
+    if (name === "phone") {
+      validatePhoneNumber(value);
+    }
+
   };
 
   const handleSave = async () => {
+    if (error) {
+    
+      return;
+    }
     try {
       const response = await axios.put(`http://localhost:5000/api/users/${user.id}`, userData);
       setUserData(response.data.data);
@@ -124,6 +142,7 @@ const Dashboard = () => {
               name="email"
               value={userData?.email || ""}
               readOnly={!editMode}
+              disabled={editMode} 
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:outline-none"
             />

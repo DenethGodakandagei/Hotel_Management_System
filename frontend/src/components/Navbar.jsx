@@ -111,6 +111,14 @@ function NavBar() {
                 Contact
               </a>
             </li>
+            <li>
+               <Link
+                    to="/cart"
+                className="text-primary1 text-lg hover:text-primary2 block md:inline-block"
+              >
+                Cart
+                </Link>
+            </li>
             {!user ? (
               <>
                 <li>

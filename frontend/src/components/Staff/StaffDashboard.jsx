@@ -7,6 +7,7 @@ import { useAuth } from "../../context/AuthContext.js";
 import ViewRooms from "../Admin/RoomManage/ViewRooms.jsx";
 import AllReservations from "../Admin/ReservationManage/AllReservations.jsx";
 import ViewMenu from "../Admin/MenuManage/ViewMenu.jsx";
+import AddRooms from "../Admin/RoomManage/AddRooms.jsx";
 
 
 const StaffDashboard = () => {
@@ -16,6 +17,7 @@ const StaffDashboard = () => {
   const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState("ViewRooms");
   const [activeTabrep, setActiveTabrep] = useState("AllReservations");
+  const [showModal, setShowModal] = useState(false); 
   const { logout } = useAuth();
 
   const handleLogout = () => {
@@ -93,9 +95,32 @@ const StaffDashboard = () => {
             {/* Header Section */}
             <div className="flex justify-between bg-gradient-to-r from-primary2 to-primary1 text-white p-6 rounded-lg shadow-md">
               <h2 className="text-3xl font-bold">Manager Dashboard</h2>
-              <button className="text-2xl border border-white rounded-md p-2 font-bold hover:scale-105 transition-transform">
-                Add Room
-              </button>
+              <button
+        onClick={() => setShowModal(true)}
+        className="text-2xl border border-white rounded-md p-2 font-bold hover:scale-105 transition-transform"
+      >
+        Add Room
+      </button>
+
+      {/* Popup Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-md shadow-lg w-96">
+            
+            
+            {/* AddRooms Component */}
+            <AddRooms />
+
+            {/* Close Button */}
+            <button
+              onClick={() => setShowModal(false)}
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded-md"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
             </div>
 
             {/* Tab Navigation */}

@@ -13,22 +13,33 @@ const AddRooms = () => {
     description: "",
   });
 
- 
+  const [nextRoomNumber, setNextRoomNumber] = useState(1);
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
-  const [rooms, setRooms] = useState([]); 
+  const [rooms, setRooms] = useState([]);
+
+  // Fetch rooms data from the API
+  const fetchRooms = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/room/");
+      setRooms(response.data);
+
+      // Extract room numbers and find the next available number
+      const roomNumbers = response.data.map((room) => Number(room.roomNumber));
+      const lastRoomNumber = Math.max(...roomNumbers, 0);
+      const nextNumber = lastRoomNumber + 1;
+
+      setNextRoomNumber(nextNumber);
+      setFormData((prev) => ({ ...prev, roomNumber: nextNumber })); // Update formData
+    } catch (error) {
+      console.error("Error fetching rooms:", error);
+    }
+  };
 
   useEffect(() => {
-    // Fetch rooms from the server to populate the room list
-    axios
-      .get("http://localhost:5000/api/room/list")
-      .then((response) => {
-        setRooms(response.data);
-      })
-      .catch((error) => {
-        console.log("Error fetching rooms:", error);
-      });
+    fetchRooms();
   }, []);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -74,8 +85,6 @@ const AddRooms = () => {
         data.append(key, formData[key]);
       }
     });
-    
-
     try {
       const response = await axios.post("http://localhost:5000/api/room/add", data, {
         headers: {
@@ -97,10 +106,6 @@ const AddRooms = () => {
         images: [],
         description: "",
       });
-
-      // Fetch updated list of rooms after adding a new room
-      const updatedRooms = await axios.get("http://localhost:5000/api/room/list");
-      setRooms(updatedRooms.data);
     } catch (error) {
       const errorMessage = error.response?.data?.message || error.message || "Error adding room";
       toast.error(errorMessage);
@@ -137,7 +142,7 @@ const AddRooms = () => {
 
   return (
     <div className="flex">
-    
+
       {/* Main Content (Room Form) */}
       <div className="flex-1 p-6 bg-white rounded shadow ml-6">
         <h1 className="text-2xl font-bold mb-4">Add New Room</h1>
@@ -155,25 +160,25 @@ const AddRooms = () => {
             />
           </div>
           <div>
-  <label className="block font-medium mb-1">Room Type</label>
-  <select
-    name="roomType"
-    value={formData.roomType}
-    onChange={handleChange}
-    className="w-full p-2 border rounded"
-    required
-  >
-    <option value="" disabled>
-      Select a room type
-    </option>
-    <option value="single">Single Room</option>
-    <option value="double">Double Room</option>
-    <option value="twin">Twin Room</option>
-    <option value="suite">Suite</option>
-    <option value="deluxe">Deluxe Room</option>
-    <option value="family">Family Room</option>
-  </select>
-</div>
+            <label className="block font-medium mb-1">Room Type</label>
+            <select
+              name="roomType"
+              value={formData.roomType}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+              required
+            >
+              <option value="" disabled>
+                Select a room type
+              </option>
+              <option value="single">Single Room</option>
+              <option value="double">Double Room</option>
+              <option value="twin">Twin Room</option>
+              <option value="suite">Suite</option>
+              <option value="deluxe">Deluxe Room</option>
+              <option value="family">Family Room</option>
+            </select>
+          </div>
 
           <div>
             <label className="block font-medium mb-1">Price Per Night</label>
@@ -245,9 +250,8 @@ const AddRooms = () => {
 
           <button
             type="submit"
-            className={`px-4 py-2 text-white rounded ${
-              isUploading ? "bg-gray-400" : "bg-primary1 hover:bg-primary1"
-            }`}
+            className={`px-4 py-2 text-white rounded ${isUploading ? "bg-gray-400" : "bg-primary1 hover:bg-primary1"
+              }`}
             disabled={isUploading}
           >
             {isUploading ? "Uploading..." : "Add Room"}
@@ -267,7 +271,7 @@ const AddRooms = () => {
           </div>
         )}
 
-      
+
       </div>
     </div>
   );

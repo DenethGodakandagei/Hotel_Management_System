@@ -12,6 +12,7 @@ import AdminDashboard from "./components/Admin/AdminDashboard";
 import ManageRooms from "./components/Admin/RoomManage/ManageRooms";
 import Roominfo from "./components/Roominfo";
 import { AuthProvider } from "./context/AuthContext";
+import { CartProvider } from "./context/cartContext";
 import ManageReservation from "./components/Admin/ReservationManage/ManageReservation";
 import ManageMenu from "./components/Admin/MenuManage/ManageMenu";
 import Dining from "./components/Dining";
@@ -21,12 +22,14 @@ import StaffDashboard from "./components/Staff/StaffDashboard";
 import ExtendRooms from "./components/ExtendRooms";
 import NavBar from "./components/Navbar";
 import { ExtendDining } from "./components/ExtendDining";
+import Cart from "./components/Cart";
 
 function App() {
   return (
     <div className="App font-barlow">
       <Toaster position="top-center" containerStyle={{ top: 60 }} />
       <AuthProvider>
+        <CartProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -52,7 +55,7 @@ function App() {
             <Route path="/managemenu" element={<ManageMenu />} />
             <Route path="/manageusers" element={<ManageUsers />} />
             <Route path="/settings" element={<AdminSettings />} />
-            -
+            <Route path="/cart" element={<Cart />} />
             <Route
               path="*"
               element={
@@ -67,6 +70,7 @@ function App() {
             />
           </Routes>
         </BrowserRouter>
+        </CartProvider>
       </AuthProvider>
     </div>
   );

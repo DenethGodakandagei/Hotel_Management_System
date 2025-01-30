@@ -75,48 +75,48 @@ const ViewRooms = () => {
     <div className=" content-center  p-4">
       {/* Room Table */}
       <div className="overflow-x-auto">
-      <h1 className="text-2xl font-semibold mb-6 text-gray-700">Rooms List</h1>
-      <table className="min-w-full bg-white overflow-hidden">
-  <thead className="bg-orange-50 text-gray-800">
-    <tr>
-      <th className="px-6 py-4 text-sm font-thin uppercase tracking-wide text-left">Room Name</th>
-      <th className="px-6 py-4 text-sm font-thin uppercase tracking-wide text-left">Room No</th>
-      <th className="px-6 py-4 text-sm font-thin uppercase tracking-wide text-left">Price</th>
-      <th className="px-6 py-4 text-sm font-thin uppercase tracking-wide text-left">Image</th>
-      <th className="px-6 py-4 text-sm font-thin uppercase tracking-wide text-left">Actions</th>
-    </tr>
-  </thead>
-  <tbody className="divide-y divide-orange-200">
-    {rooms.map((room) => (
-      <tr key={room._id} className="hover:bg-gray-50 transition duration-300">
-        <td className="px-6 py-4 text-sm text-gray-700">{room.roomType} Room</td>
-        <td className="px-6 py-4 text-sm text-gray-600">{room.roomNumber}</td>
-        <td className="px-6 py-4 text-sm text-gray-800">${room.pricePerNight}</td>
-        <td className="px-6 py-4">
-          {room.images.length > 0 ? (
-            <img src={room.images[0]} alt="Room" className="w-16 h-16 object-cover rounded-md shadow-md" />
-          ) : (
-            <span className="text-gray-400">No Image</span>
-          )}
-        </td>
-        <td className="px-6 py-4 flex space-x-2">
-          <button
-            onClick={() => handleEdit(room)}
-            className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-blue-500 transition duration-300"
-          >
-            Edit
-          </button>
-          <button
-            onClick={() => handleDelete(room._id)}
-            className="px-4 py-2 bg-red-400 text-white rounded-md hover:bg-red-500 transition duration-300"
-          >
-            Delete
-          </button>
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</table>
+        <h1 className="text-2xl font-semibold mb-6 text-gray-700">Rooms List</h1>
+        <table className="min-w-full bg-white overflow-hidden">
+          <thead className="bg-orange-50 text-gray-800">
+            <tr>
+              <th className="px-6 py-4 text-sm font-thin uppercase tracking-wide text-left">Room Name</th>
+              <th className="px-6 py-4 text-sm font-thin uppercase tracking-wide text-left">Room No</th>
+              <th className="px-6 py-4 text-sm font-thin uppercase tracking-wide text-left">Price</th>
+              <th className="px-6 py-4 text-sm font-thin uppercase tracking-wide text-left">Image</th>
+              <th className="px-6 py-4 text-sm font-thin uppercase tracking-wide text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-orange-200">
+            {rooms.map((room) => (
+              <tr key={room._id} className="hover:bg-gray-50 transition duration-300">
+                <td className="px-6 py-4 text-sm text-gray-700">{room.roomType} Room</td>
+                <td className="px-6 py-4 text-sm text-gray-600">{room.roomNumber}</td>
+                <td className="px-6 py-4 text-sm text-gray-800">${room.pricePerNight}</td>
+                <td className="px-6 py-4">
+                  {room.images.length > 0 ? (
+                    <img src={room.images[0]} alt="Room" className="w-16 h-16 object-cover rounded-md shadow-md" />
+                  ) : (
+                    <span className="text-gray-400">No Image</span>
+                  )}
+                </td>
+                <td className="px-6 py-4 flex space-x-2">
+                  <button
+                    onClick={() => handleEdit(room)}
+                    className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-blue-500 transition duration-300"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(room._id)}
+                    className="px-4 py-2 bg-red-400 text-white rounded-md hover:bg-red-500 transition duration-300"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
       </div>
 
@@ -144,9 +144,11 @@ const ViewRooms = () => {
                   name="roomNumber"
                   value={selectedRoom.roomNumber}
                   onChange={handleInputChange}
-                  className="w-full p-2 border border-gray-300 rounded mt-2"
+                  className="w-full p-2 border border-gray-300 rounded mt-2 bg-gray-100 cursor-not-allowed"
+                  disabled
                 />
               </div>
+
               <div className="mb-4">
                 <label className="block text-sm font-medium">Price Per Night</label>
                 <input
@@ -158,14 +160,24 @@ const ViewRooms = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium">Room Type</label>
-                <input
-                  type="text"
+
+                <select
                   name="roomType"
                   value={selectedRoom.roomType}
                   onChange={handleInputChange}
-                  className="w-full p-2 border border-gray-300 rounded mt-2"
-                />
+                  className="w-full p-2 border rounded"
+                  required
+                >
+                  <option value="" disabled>
+                    Select a room type
+                  </option>
+                  <option value="single">Single Room</option>
+                  <option value="double">Double Room</option>
+                  <option value="twin">Twin Room</option>
+                  <option value="suite">Suite</option>
+                  <option value="deluxe">Deluxe Room</option>
+                  <option value="family">Family Room</option>
+                </select>
               </div>
               <button
                 type="submit"

@@ -20,17 +20,45 @@ const Register = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleChange = (e) => {
+  const validateEmail = (email) => {
+    // General email validation pattern
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      setError("Invalid email address");
+    } else {
+      setError("");
+    }
+  };
+  const validatePhoneNumber = (phone) => {
+    // Sri Lanka phone number pattern
+    const sriLankaPhoneRegex = /^(?:\+94|0)(?:7[0125678]\d{7}|[1-9]\d{8})$/;
+
+    if (!sriLankaPhoneRegex.test(phone)) {
+      setError("Invalid  phone number");
+    } else {
+      setError("");
+    }
+  };
+  const handlePhoneChange = (e) => {
     const { name, value } = e.target;
-    setUserData({
-      ...userData,
-      [name]: value,
-    });
+    setUserData({ ...userData, [name]: value });
+    validatePhoneNumber(value); // Validate phone number
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+
+    if (name === "email") {
+      validateEmail(value); // Validate email
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (error) {
+      return;
+    }
     try {
       // Register the user
       const userResponse = await axios.post(
@@ -123,7 +151,7 @@ const Register = () => {
               type="tel"
               name="phone"
               value={userData.phone}
-              onChange={handleChange}
+              onChange={handlePhoneChange}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary1"
             />
           </div>
