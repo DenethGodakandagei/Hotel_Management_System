@@ -105,7 +105,7 @@ const StaffDashboard = () => {
       {/* Popup Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-md shadow-lg w-96">
+          <div className="text-black p-6 rounded-md shadow-lg w-96">
             
             
             {/* AddRooms Component */}

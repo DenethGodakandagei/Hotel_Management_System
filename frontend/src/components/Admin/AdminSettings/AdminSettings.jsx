@@ -4,7 +4,7 @@ import { useAuth } from "../../../context/AuthContext.js";
 import axios from "axios";
 
 const AdminSettings = () => {
-  const { user } = useAuth(); // Get user from context but avoid using setUser
+  const { user ,updateUser  } = useAuth(); // Get user from context but avoid using setUser
   const [editMode, setEditMode] = useState(false);
   const [userData, setUserData] = useState({
     name: user?.name || "",
@@ -56,7 +56,8 @@ const AdminSettings = () => {
         userData
       );
       
-      setUserData(response.data.data); // Update local state
+      setUserData(response.data.data);
+      updateUser(userData); 
       setSuccess("Profile updated successfully!");
       setEditMode(false);
     } catch (err) {
@@ -71,7 +72,6 @@ const AdminSettings = () => {
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
       <DashboardNavigater />
-
       {/* Main Content */}
       <main className="flex-1 p-8 space-y-6">
         {/* Welcome Banner */}

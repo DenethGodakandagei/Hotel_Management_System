@@ -24,24 +24,32 @@ const Dashboard = () => {
   const validatePhoneNumber = (phone) => {
     // Sri Lanka phone number pattern
     const sriLankaPhoneRegex = /^(?:\+94|0)(?:7[0125678]\d{7}|[1-9]\d{8})$/;
-
-    if (!sriLankaPhoneRegex.test(phone)) {
-      setError("Invalid  phone number");
+  
+    if (!sriLankaPhoneRegex.test(phone.replace(/\s/g, ""))) {
+      setError("Invalid phone number");
     } else {
       setError("");
     }
   };
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
+    let formattedValue = value.replace(/\D/g, ""); // Remove non-numeric characters
+  
+    if (name === "phone") {
+      if (formattedValue.length > 3 && formattedValue.length <= 7) {
+        formattedValue = `${formattedValue.slice(0, 3)} ${formattedValue.slice(3)}`;
+      } else if (formattedValue.length > 7) {
+        formattedValue = `${formattedValue.slice(0, 3)} ${formattedValue.slice(3, 7)} ${formattedValue.slice(7)}`;
+      }
+  
+      validatePhoneNumber(formattedValue);
+    }
+  
     setUserData((prevUserData) => ({
       ...prevUserData,
-      [name]: value,
+      [name]: formattedValue,
     }));
-    if (name === "phone") {
-      validatePhoneNumber(value);
-    }
-
   };
 
   const handleSave = async () => {
@@ -167,6 +175,7 @@ const Dashboard = () => {
             <input
               type="text"
               name="phone"
+              maxlength="12"
               value={userData?.phone || ""}
               onChange={handleChange}
               readOnly={!editMode}

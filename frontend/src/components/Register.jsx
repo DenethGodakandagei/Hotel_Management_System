@@ -33,18 +33,34 @@ const Register = () => {
   const validatePhoneNumber = (phone) => {
     // Sri Lanka phone number pattern
     const sriLankaPhoneRegex = /^(?:\+94|0)(?:7[0125678]\d{7}|[1-9]\d{8})$/;
-
-    if (!sriLankaPhoneRegex.test(phone)) {
-      setError("Invalid  phone number");
+  
+    if (!sriLankaPhoneRegex.test(phone.replace(/\s/g, ""))) {
+      // Remove spaces before validation
+      setError("Invalid phone number");
     } else {
       setError("");
     }
   };
+  
   const handlePhoneChange = (e) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+  
+    // Remove non-numeric characters except '+'
+    value = value.replace(/\D/g, "");
+  
+    // Apply formatting: 076 8250 161
+    if (value.length > 3 && value.length <= 7) {
+      value = `${value.slice(0, 3)} ${value.slice(3)}`;
+    } else if (value.length > 7) {
+      value = `${value.slice(0, 3)} ${value.slice(3, 7)} ${value.slice(7)}`;
+    }
+  
     setUserData({ ...userData, [name]: value });
-    validatePhoneNumber(value); // Validate phone number
+  
+    // Validate phone number (after removing spaces)
+    validatePhoneNumber(value.replace(/\s/g, ""));
   };
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -150,6 +166,7 @@ const Register = () => {
             <input
               type="tel"
               name="phone"
+              maxlength="12"
               value={userData.phone}
               onChange={handlePhoneChange}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary1"

@@ -19,9 +19,35 @@ const StaffRegistration = () => {
   
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-  
+
+    const validatePhoneNumber = (phone) => {
+      // Sri Lanka phone number pattern with spaces (XXX XXXX XXX)
+      const sriLankaPhoneRegex = /^(?:\+94|0)7[0125678] \d{4} \d{3}$/;
+    
+      setError(sriLankaPhoneRegex.test(phone) ? "" : "Invalid phone number");
+    };
+    
+    const formatPhoneNumber = (value) => {
+      let digitsOnly = value.replace(/\D/g, ""); // Remove non-numeric characters
+    
+      if (digitsOnly.length > 3 && digitsOnly.length <= 7) {
+        return `${digitsOnly.slice(0, 3)} ${digitsOnly.slice(3)}`;
+      } else if (digitsOnly.length > 7) {
+        return `${digitsOnly.slice(0, 3)} ${digitsOnly.slice(3, 7)} ${digitsOnly.slice(7)}`;
+      }
+    
+      return digitsOnly;
+    };
+    
+    
     const handleChange = (e) => {
       const { name, value } = e.target;
+  let updatedValue = value;
+
+  if (name === "phone") {
+    updatedValue = formatPhoneNumber(value);
+    validatePhoneNumber(updatedValue);
+  }
   
       if (name === "role") {
         if (value === "staff") {
@@ -177,6 +203,7 @@ const StaffRegistration = () => {
                     name="phone"
                     value={userData.phone}
                     onChange={handleChange}
+                    maxLength={10}
                     className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary1"
                   />
                 </div>
