@@ -31,7 +31,7 @@ const Dining = () => {
         <h1 className="text-4xl font-bold text-center text-gray-800 pt-14 mb-6">Our Menu</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {menuItems.map((item) => (
+          {menuItems.slice(0, 3).map((item) => (
             <div key={item.name} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
               <img src={item.imageUrl} alt={item.name} className="w-full h-48 object-cover rounded-t-lg" />
               <div className="mt-4">

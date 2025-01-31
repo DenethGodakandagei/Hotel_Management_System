@@ -14,6 +14,7 @@ import menuRoutes from './Routes/menuRoutes.js';
 import staffRoutes from './Routes/StaffRoutes.js';
 import userRoutes from './Routes/userRoutes.js';
 import emailRoutes from './Routes/emailRoutes.js';
+import orderRoutes from './Routes/orderRoutes.js'
 
 dotenv.config();
 connectDB();
@@ -35,6 +36,7 @@ app.use('/api/menu', menuRoutes);
 app.use('/api/staff', staffRoutes);
 app.use('/api/users', userRoutes);
 app.use("/api/send-email", emailRoutes);
+app.use('/api/orders', orderRoutes);
 
 const PORT = process.env.PORT || 5000;
 

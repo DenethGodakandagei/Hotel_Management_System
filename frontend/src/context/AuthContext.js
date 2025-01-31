@@ -37,8 +37,10 @@ export const AuthProvider = ({ children }) => {
   };
   const updateUser = (updatedUser) => {
     setUser(updatedUser);
-    localStorage.setItem("user", JSON.stringify(updatedUser)); // Persist the update
+    sessionStorage.setItem("user", JSON.stringify(updatedUser)); // Ensure sessionStorage is updated
+    localStorage.setItem("user", JSON.stringify(updatedUser));  // Keep localStorage consistent
   };
+  
   const logout = () => {
     setUser(null);
     sessionStorage.removeItem('user'); 

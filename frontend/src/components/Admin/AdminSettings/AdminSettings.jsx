@@ -26,48 +26,69 @@ const AdminSettings = () => {
 
   const handleEdit = () => setEditMode(true);
 
+  const validatePhoneNumber = (phone) => {
+    // Sri Lanka phone number pattern
+    const sriLankaPhoneRegex = /^(?:\+94|0)(?:7[0125678]\d{7}|[1-9]\d{8})$/;
+  
+    if (!sriLankaPhoneRegex.test(phone.replace(/\s/g, ""))) {
+      // Remove spaces before validation
+      setError("Invalid phone number");
+    } else {
+      setError("");
+    }
+  };
+  
+  const handlePhoneChange = (e) => {
+    let { name, value } = e.target;
+  
+    // Remove non-numeric characters except '+'
+    value = value.replace(/\D/g, "");
+  
+    // Apply formatting: 076 8250 161
+    if (value.length > 3 && value.length <= 7) {
+      value = `${value.slice(0, 3)} ${value.slice(3)}`;
+    } else if (value.length > 7) {
+      value = `${value.slice(0, 3)} ${value.slice(3, 7)} ${value.slice(7)}`;
+    }
+  
+    setUserData({ ...userData, [name]: value });
+  
+    // Validate phone number (after removing spaces)
+    validatePhoneNumber(value.replace(/\s/g, ""));
+  };
+  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-  };
-
-  const validatePhoneNumber = (phone) => {
-    const phoneRegex = /^(?:\+94|0)?[1-9][0-9]{8}$/; // Sri Lanka phone number format
-    if (!phoneRegex.test(phone)) {
-      setError("Invalid phone number format.");
-      return false;
-    }
-    setError("");
-    return true;
+   
   };
 
   const handleSave = async () => {
-    if (!validatePhoneNumber(userData.phone)) return;
-    setLoading(true);
-    setError("");
+    if (error) return; // Don't allow save if there's an error
+  
     try {
-      if (!user?.id) throw new Error("User ID not found");
-
       const response = await axios.put(
         `http://localhost:5000/api/users/${user.id}`,
         userData
       );
-      
-      setUserData(response.data.data);
-      updateUser(userData); 
-      setSuccess("Profile updated successfully!");
+  
+      const updatedUser = response.data.data;
+      setUserData(updatedUser);
+      updateUser(updatedUser); // Ensure user state updates
+  
       setEditMode(false);
+      setError(""); 
+      setSuccess("Profile updated successfully!"); // Show success message
     } catch (err) {
-      console.error("Error updating profile:", err);
-      setError("Error updating profile. Please try again.");
-    } finally {
-      setLoading(false);
+      console.error("Error updating user details:", err);
+      setError("Unable to update user details. Please try again.");
     }
   };
-
+  
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -115,7 +136,7 @@ const AdminSettings = () => {
                   type="text"
                   name="phone"
                   value={userData.phone}
-                  onChange={handleChange}
+                  onChange={handlePhoneChange}
                   className="p-2 border rounded-md w-full"
                 />
               </div>

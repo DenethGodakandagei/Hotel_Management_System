@@ -26,16 +26,19 @@ export const CartProvider = ({ children }) => {
   };
 
   // Remove item from cart
-  const removeFromCart = (name) => {
-    setCartItems((prevCart) => prevCart.filter((item) => item.name !== name));
+  const removeFromCart = (id) => {
+    setCartItems((prevCart) => prevCart.filter((item) => item._id !== id));
   };
 
   // Update item quantity
-  const updateQuantity = (name, quantity) => {
+  const updateQuantity = (id, quantity) => {
     setCartItems((prevCart) =>
-      prevCart.map((item) => (item.name === name ? { ...item, quantity } : item))
+      prevCart.map((item) =>
+        item._id === id ? { ...item, quantity: quantity } : item
+      )
     );
   };
+
 
   return (
     <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity }}>
