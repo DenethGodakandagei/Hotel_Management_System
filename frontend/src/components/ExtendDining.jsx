@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import logo from "../assets/logo.svg";
 import { IoMdHome } from "react-icons/io";
 import { Link } from 'react-router-dom';
-import { useCart } from '../context/cartContext'; // Import useCart hook
+import { useCart } from '../context/cartContext'; 
+import toast from 'react-hot-toast';
 
 export const ExtendDining = () => {
   const [menuItems, setMenuItems] = useState([]);
-  const { addToCart } = useCart(); // Use the Cart Context
+  const { addToCart } = useCart(); 
 
   // Fetch menu items from the API
   useEffect(() => {
@@ -25,7 +26,7 @@ export const ExtendDining = () => {
   // Function to handle adding items to cart
   const handleAddToCart = (item) => {
     addToCart(item);
-    alert(`✅ ${item.name} has been added to your cart!`);
+    toast.success(` ${item.name} has been added to your cart!`);
   };
 
   return (

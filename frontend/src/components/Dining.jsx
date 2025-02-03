@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useCart } from "../context/cartContext"; // Import Cart Context
+import { useCart } from "../context/cartContext";
+import toast from 'react-hot-toast';
 
 const Dining = () => {
   const [menuItems, setMenuItems] = useState([]);
-  const { addToCart } = useCart(); // Use the Cart Context
+  const { addToCart } = useCart(); 
 
   useEffect(() => {
     const fetchMenuItems = async () => {
@@ -22,7 +23,7 @@ const Dining = () => {
   // Function to handle adding items to cart
   const handleAddToCart = (item) => {
     addToCart(item);
-    alert(`✅ ${item.name} has been added to your cart!`);
+    toast.success(`${item.name} has been added to your cart!`);
   };
 
   return (
