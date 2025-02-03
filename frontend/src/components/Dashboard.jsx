@@ -8,6 +8,7 @@ const Dashboard = () => {
   const [userData, setUserData] = useState(null);
   const [reservations, setReservations] = useState([]);
   const [error, setError] = useState("");
+  const [orders, setOrders] = useState([]);
   const [editMode, setEditMode] = useState(false); // New state for edit mode
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -104,6 +105,24 @@ const Dashboard = () => {
     }
   }, [navigate, user]);
 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/orders/user/${user.id}`);
+        setOrders(response.data);
+      } catch (err) {
+        setError("Error fetching orders");
+      } finally {
+       return ;
+      }
+    };
+
+    if (user.id) {
+      fetchOrders();
+    }
+  }, [user.id]);
+
+
   const handleDelete = async (reservationId) => {
     try {
       await axios.delete(`http://localhost:5000/api/reservations/${reservationId}`);
@@ -113,6 +132,14 @@ const Dashboard = () => {
     } catch (err) {
       console.error("Error deleting reservation:", err);
       setError("Unable to delete the reservation. Please try again.");
+    }
+  };
+  const handleOrderDelete = async (orderId) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/orders/${orderId}`);
+      setOrders(orders.filter((order) => order._id !== orderId));
+    } catch (err) {
+      console.error("Error deleting order", err);
     }
   };
 
@@ -251,6 +278,39 @@ const Dashboard = () => {
             <p className="text-center text-gray-600">No reservations found.</p>
           )}
         </div>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+      <h2 className="text-2xl font-semibold text-orange-600 mb-6">Your Orders</h2>
+      {orders.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {orders.map((order) => (
+            <div
+              key={order._id}
+              className="bg-gray-50 p-4 rounded-lg shadow border border-gray-200 hover:shadow-lg transition-shadow"
+            >
+              <div className="flex justify-between">
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  {order.items?.map((item) => (
+                    <span key={item._id} className="block">
+                      {item.menuItemId?.name || "Unknown Item"} (Qty: {item.quantity})
+                    </span>
+                  ))}
+                </h3>
+                <button
+                  onClick={() => handleOrderDelete(order._id)}
+                  className="mt-1 h-8 px-2 py-1 bg-red-400 text-white rounded-md hover:bg-red-500 focus:outline-none"
+                >
+                  <MdDeleteOutline />
+                </button>
+              </div>
+              <p className="text-gray-700">Total Price: ${order.totalAmount}</p>
+              <p className="text-gray-600">Status: {order.status}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-600">No Orders found.</p>
+      )}
+    </div>
       </div>
     </div>
   );

@@ -12,8 +12,9 @@ const Cart = () => {
     name: user?.name || "",
     email: user?.email || "",
     phone: user?.phone || "",
-    address: "",
+    address:  user?.address||"",
   });
+  console.log(user);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -36,7 +37,7 @@ const Cart = () => {
 
     // Prepare order data based on cart items
     const orderData = {
-      userId: user._id,
+      userId: user.id,
       items: cartItems.map(item => ({
         menuItemId: item._id,
         quantity: item.quantity
@@ -51,8 +52,7 @@ const Cart = () => {
       // Send request to the backend to create the order
       const response = await axios.post("http://localhost:5000/api/orders/create", orderData);
       setSuccessMessage("Order placed successfully!");
-      // Clear the cart after successful order
-      // You can reset cartItems in the context here if required
+      setShowCheckout(false)
     } catch (err) {
       console.error(err);
       setError("There was an error placing your order. Please try again.");
@@ -76,20 +76,20 @@ const Cart = () => {
                 <p className="text-gray-600">${item.price.toFixed(2)} x {item.quantity}</p>
               </div>
               <div className="flex items-center space-x-2">
-              <button
-  className="bg-gray-200 px-3 py-1 rounded-md"
-  onClick={() => updateQuantity(item._id, item.quantity - 1)}
-  disabled={item.quantity === 1}
->
-  -
-</button>
-<span>{item.quantity}</span>
-<button
-  className="bg-gray-200 px-3 py-1 rounded-md"
-  onClick={() => updateQuantity(item._id, item.quantity + 1)}
->
-  +
-</button>
+                <button
+                  className="bg-gray-200 px-3 py-1 rounded-md"
+                  onClick={() => updateQuantity(item._id, item.quantity - 1)}
+                  disabled={item.quantity === 1}
+                >
+                  -
+                </button>
+                <span>{item.quantity}</span>
+                <button
+                  className="bg-gray-200 px-3 py-1 rounded-md"
+                  onClick={() => updateQuantity(item._id, item.quantity + 1)}
+                >
+                  +
+                </button>
 
                 <button
                   className="bg-red-500 text-white px-3 py-1 rounded-md"
