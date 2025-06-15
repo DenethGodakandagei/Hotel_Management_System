@@ -5,7 +5,7 @@ export const createMenuItem = async (req, res) => {
     try {
       const { name, description, price, category } = req.body;
       const imageLinks = [];
-  
+      console.log( req.body);
       // Ensure req.files is populated
       if (!req.files || req.files.length === 0) {
         return res.status(400).json({ error: 'No images uploaded' });

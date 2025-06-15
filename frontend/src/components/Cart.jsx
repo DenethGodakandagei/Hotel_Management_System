@@ -3,6 +3,7 @@ import { useCart } from "../context/cartContext.js";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
+import toast from 'react-hot-toast';
 
 const Cart = () => {
   const { user } = useAuth();
@@ -52,6 +53,7 @@ const Cart = () => {
       // Send request to the backend to create the order
       const response = await axios.post("http://localhost:5000/api/orders/create", orderData);
       setSuccessMessage("Order placed successfully!");
+  toast.success("Order placed successfully!");
       setShowCheckout(false)
     } catch (err) {
       console.error(err);
