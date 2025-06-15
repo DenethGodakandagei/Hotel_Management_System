@@ -5,6 +5,7 @@ import logo from "../assets/logo.svg";
 import { IoMdHome } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../context/AuthContext.js';
+import api from "../services/api";
 
 const Login = () => {
   const [userData, setUserData] = useState({
@@ -25,7 +26,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", userData);
+     // const response = await axios.post("http://localhost:5000/api/auth/login", userData);
+     const response = await api.post("/auth/login", userData);
   
       const user = response.data.user;
       login(user);

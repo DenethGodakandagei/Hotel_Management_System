@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import api from "../../../services/api";
 
 const AllReservations = () => {
   const [reservations, setReservations] = useState([]);
@@ -7,7 +8,8 @@ const AllReservations = () => {
   // Fetch all reservations
   const fetchReservations = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/reservations");
+      //const response = await axios.get("http://localhost:5000/api/reservations");
+       const response = await api.get("/reservations");
       setReservations(response.data);
     } catch (error) {
       console.error("Error fetching reservations:", error);

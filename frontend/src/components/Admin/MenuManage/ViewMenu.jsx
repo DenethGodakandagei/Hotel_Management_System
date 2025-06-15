@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../../../services/api";
 
 const ViewMenu = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -11,12 +12,14 @@ const ViewMenu = () => {
   const [isUpdating, setIsUpdating] = useState(false); 
   const [refreshData, setRefreshData] = useState(false);
   const navigate = useNavigate();
+  
 
   // Fetch menu data from the API
   useEffect(() => {
     const fetchMenuItems = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/menu");
+       // const response = await axios.get("http://localhost:5000/api/menu");
+          const response = await api.get("/menu");
         setMenuItems(response.data); // Update state with fetched menu items
         setLoading(false);
       } catch (err) {
@@ -35,8 +38,8 @@ const ViewMenu = () => {
 
   const handleDelete = (id) => {
     // Make a delete request to the API
-    axios
-      .delete(`http://localhost:5000/api/menu/${id}`)
+    //axios.delete(`http://localhost:5000/api/menu/${id}`)
+     api.delete(`/menu/${id}`)
       .then(() => {
         setMenuItems(menuItems.filter((item) => item._id !== id)); // Update state after deletion
       })
@@ -53,10 +56,8 @@ const ViewMenu = () => {
   const handleUpdateItem = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(
-        `http://localhost:5000/api/menu/${currentItem._id}`,
-        currentItem
-      );
+     // await axios.put(`http://localhost:5000/api/menu/${currentItem._id}`,currentItem);
+       await api.put(`/menu/${currentItem._id}`,currentItem);
       setRefreshData((prev) => !prev); // Toggle refreshData to trigger re-fetch
       handleModalClose(); // Close the modal after updating
     } catch (err) {

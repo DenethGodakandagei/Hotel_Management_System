@@ -4,6 +4,7 @@ import { Elements, CardElement, useStripe, useElements } from "@stripe/react-str
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from "axios";
+import api from "../../services/api";
 
 // Load Stripe with the publishable key from environment variables
 const stripePromise = loadStripe("pk_test_51QeUmGQP2cLYp48gx46lx8zTLraBQX3wK95fVk3GUUmRESmaki00yUXf9dXVmoRemMVyuifjMzFRtYMo5HAcbCgs00KqTunN9s");
@@ -40,8 +41,8 @@ const CheckoutForm = ({ reservationData, onPaymentSuccess }) => {
 
     try {
       // Create a payment on the backend
-      const res = await axios.post(
-        "http://localhost:5000/api/payments/create_payment", // Your backend payment route
+     // const res = await axios.post( "http://localhost:5000/api/payments/create_payment", // Your backend payment route
+       const res = await api.post( "/payments/create_payment",
         {
           email: reservationData.email,
           roomId: reservationData.roomId,
@@ -154,7 +155,9 @@ const Payment = ({ reservationData, onPaymentSuccess }) => {
   const handlePaymentSuccess = async (paymentIntent) => {
     try {
       // Send reservation data to the backend after payment success
-      const response = await axios.post("http://localhost:5000/api/reservations", {
+      //const response = await axios.post("http://localhost:5000/api/reservations", 
+      const response = await api.post("/reservations", 
+        {
         email: reservationData.email,
         roomId: reservationData.roomId,
         checkInDate: reservationData.checkInDate,

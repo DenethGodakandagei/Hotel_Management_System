@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import logo from "../assets/logo.svg";
 import { IoMdHome } from "react-icons/io";
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/cartContext'; 
 import toast from 'react-hot-toast';
+import api from "../services/api";
 
 export const ExtendDining = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -13,7 +15,8 @@ export const ExtendDining = () => {
   useEffect(() => {
     const fetchMenuItems = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/menu');
+        //const response = await axios.get('http://localhost:5000/api/menu');
+       const response = await api.get('/menu');
         const data = await response.json();
         setMenuItems(data);
       } catch (error) {

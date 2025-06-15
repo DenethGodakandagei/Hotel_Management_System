@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import api from "../services/api";
 
 const AuthContext = createContext();
 
@@ -19,7 +20,8 @@ export const AuthProvider = ({ children }) => {
       // Try to fetch user data from the server if it's not in sessionStorage
       const loadUser = async () => {
         try {
-          const response = await axios.get('http://localhost:5000/api/auth/protected', { withCredentials: true });
+        //  const response = await axios.get('http://localhost:5000/api/auth/protected', { withCredentials: true });
+          const response = await api.get('/auth/protected', { withCredentials: true });
           setUser(response.data.user);
           sessionStorage.setItem('user', JSON.stringify(response.data.user)); // Store in sessionStorage
         } catch (error) {

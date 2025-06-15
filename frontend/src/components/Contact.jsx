@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import toast from 'react-hot-toast';
-
+import api from "../services/api";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -32,7 +32,9 @@ export const Contact = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/send-email", {
+     // const response = await axios.post("http://localhost:5000/api/send-email",
+       const response = await api.post("/send-email", 
+        {
         from: email,
         to: "contact.deneth@gmail.com", // Replace with actual email
         subject,

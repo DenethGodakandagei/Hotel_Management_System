@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { MdDeleteOutline } from "react-icons/md";
 import axios from "axios";
+import api from "../services/api";
 
 const Dashboard = () => {
   const [userData, setUserData] = useState(null);
@@ -59,7 +60,8 @@ const Dashboard = () => {
       return;
     }
     try {
-      const response = await axios.put(`http://localhost:5000/api/users/${user.id}`, userData);
+      //const response = await axios.put(`http://localhost:5000/api/users/${user.id}`, userData);
+      const response = await api.put(`/users/${user.id}`, userData);
       setUserData(response.data.data);
       setEditMode(false); // Exit edit mode after saving
       setError(""); // Clear any previous errors
@@ -78,14 +80,16 @@ const Dashboard = () => {
 
       const fetchReservations = async () => {
         try {
-          const response = await axios.get("http://localhost:5000/api/reservations");
+         // const response = await axios.get("http://localhost:5000/api/reservations");
+         const response = await api.get("/reservations");
           const filteredReservations = response.data.filter(
             (reservation) => reservation.email === user.email
           );
           const reservationsWithRoomDetails = await Promise.all(
             filteredReservations.map(async (reservation) => {
               try {
-                const roomResponse = await axios.get(`http://localhost:5000/api/room/${reservation.roomId._id}`);
+               // const roomResponse = await axios.get(`http://localhost:5000/api/room/${reservation.roomId._id}`);
+                 const roomResponse = await api.get(`/room/${reservation.roomId._id}`);
                 return { ...reservation, room: roomResponse.data };
               } catch (err) {
                 console.error(`Error fetching room details for roomId ${reservation.roomId}:`, err);
@@ -108,7 +112,8 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/orders/user/${user.id}`);
+        //const response = await axios.get(`http://localhost:5000/api/orders/user/${user.id}`);
+         const response = await api.get(`/orders/user/${user.id}`);
         setOrders(response.data);
       } catch (err) {
         setError("Error fetching orders");
@@ -125,7 +130,8 @@ const Dashboard = () => {
 
   const handleDelete = async (reservationId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/reservations/${reservationId}`);
+      //await axios.delete(`http://localhost:5000/api/reservations/${reservationId}`);
+       await api.delete(`/reservations/${reservationId}`);
       setReservations((prevReservations) =>
         prevReservations.filter((reservation) => reservation._id !== reservationId)
       );
@@ -136,7 +142,8 @@ const Dashboard = () => {
   };
   const handleOrderDelete = async (orderId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/orders/${orderId}`);
+     // await axios.delete(`http://localhost:5000/api/orders/${orderId}`);
+       await api.delete(`/orders/${orderId}`);
       setOrders(orders.filter((order) => order._id !== orderId));
     } catch (err) {
       console.error("Error deleting order", err);

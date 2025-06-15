@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import toast from 'react-hot-toast';
+import api from "../../../services/api";
 
 const AddRooms = () => {
   const [formData, setFormData] = useState({
@@ -21,7 +22,8 @@ const AddRooms = () => {
   // Fetch rooms data from the API
   const fetchRooms = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/room/");
+     // const response = await axios.get("http://localhost:5000/api/room/");
+       const response = await api.get("/room/");
       setRooms(response.data);
 
       // Extract room numbers and find the next available number
@@ -86,7 +88,10 @@ const AddRooms = () => {
       }
     });
     try {
-      const response = await axios.post("http://localhost:5000/api/room/add", data, {
+     // const response = await axios.post("http://localhost:5000/api/room/add", data, 
+         const response = await api.post("/room/add", data, 
+        
+        {
         headers: {
           "Content-Type": "multipart/form-data",
         },

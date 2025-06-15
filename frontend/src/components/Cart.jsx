@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import toast from 'react-hot-toast';
+import api from "../services/api";
 
 const Cart = () => {
   const { user } = useAuth();
@@ -51,7 +52,8 @@ const Cart = () => {
 
     try {
       // Send request to the backend to create the order
-      const response = await axios.post("http://localhost:5000/api/orders/create", orderData);
+     // const response = await axios.post("http://localhost:5000/api/orders/create", orderData);
+        const response = await api.post("/orders/create", orderData);
       setSuccessMessage("Order placed successfully!");
   toast.success("Order placed successfully!");
       setShowCheckout(false)

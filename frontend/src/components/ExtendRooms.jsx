@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import { IoMdHome } from "react-icons/io";
 import axios from "axios";
+import api from "../services/api";
 
 const ExtendRooms = () => {
     const [rooms, setRooms] = useState([]);
@@ -14,7 +15,8 @@ const ExtendRooms = () => {
     // Fetch rooms from the backend
     const fetchRooms = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/room/");
+       // const response = await axios.get("http://localhost:5000/api/room/");
+         const response = await api.get("/room/");
         setRooms(response.data);
         setLoading(false);
       } catch (err) {

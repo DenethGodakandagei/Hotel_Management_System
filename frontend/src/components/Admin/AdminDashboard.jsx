@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import DashboardNavigater from "./DashboardNavigater";
+import api from "../../services/api";
 
 const AdminDashboard = () => {
   const [totalRooms, setTotalRooms] = useState(0);
@@ -17,12 +18,14 @@ const AdminDashboard = () => {
   const [reservationError, setReservationError] = useState("");
   const [paymentError, setPaymentError] = useState("");
   const [menuError, setMenuError] = useState("");
+  
 
   useEffect(() => {
     // Fetch rooms data
     const fetchRooms = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/room");
+      //  const response = await axios.get("http://localhost:5000/api/room");
+        const response = await api.get("/room");
         setTotalRooms(response.data.length); // Assuming the API returns an array of rooms
         setRoomDetails(response.data); // Store room details for display
         setRoomError("");
@@ -36,7 +39,8 @@ const AdminDashboard = () => {
     // Fetch reservations data
     const fetchReservations = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/reservations");
+        //const response = await axios.get("http://localhost:5000/api/reservations");
+        const response = await api.get("/reservations");
         setTotalReservations(response.data.length); // Assuming the API returns an array of reservations
         setReservationError("");
       } catch (err) {
@@ -51,7 +55,8 @@ const AdminDashboard = () => {
     // Fetch payments data
     const fetchPayments = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/payments");
+       // const response = await axios.get("http://localhost:5000/api/payments");
+         const response = await api.get("/payments");
         const total = response.data.reduce((acc, payment) => acc + payment.amount, 0); // Sum of all amounts
         setTotalPayments(total);
         setPaymentError("");
@@ -66,7 +71,8 @@ const AdminDashboard = () => {
     // Fetch menu data
     const fetchMenu = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/menu");
+       // const response = await axios.get("http://localhost:5000/api/menu");
+         const response = await api.get("/menu");
         setMenuDetails(response.data); // Store menu details for display
         setMenuError("");
       } catch (err) {

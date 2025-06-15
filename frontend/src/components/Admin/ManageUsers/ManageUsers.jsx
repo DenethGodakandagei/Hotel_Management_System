@@ -3,6 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import DashboardNavigater from "../DashboardNavigater";
 import StaffRegistration from "../../Staff/StaffRegistration";
+import api from "../../../services/api";
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -13,7 +14,8 @@ const ManageUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/users");
+      //  const response = await axios.get("http://localhost:5000/api/users");
+          const response = await api.get("/users");
         setUsers(response.data.data);
         setError("");
       } catch (err) {
@@ -28,7 +30,8 @@ const ManageUsers = () => {
   // Delete user function
   const deleteUser = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/users/${id}`);
+      //await axios.delete(`http://localhost:5000/api/users/${id}`);
+       await api.delete(`/users/${id}`);
       setUsers(users.filter((user) => user._id !== id));
       toast.success("User deleted successfully!");
     } catch (err) {

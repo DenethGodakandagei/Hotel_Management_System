@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import api from "../../../services/api";
 
 const AddMenu = () => {
   const [name, setName] = useState('');
@@ -10,6 +11,7 @@ const AddMenu = () => {
   const [images, setImages] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);  // Track progress
+  
 
   const handleImageChange = (e) => {
     setImages(e.target.files);
@@ -30,7 +32,9 @@ const AddMenu = () => {
 
     setUploading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/menu', formData, {
+     // const response = await axios.post('http://localhost:5000/api/menu', formData, 
+         const response = await api.post('/menu', formData, 
+        {
         headers: { 'Content-Type': 'multipart/form-data' },
         onUploadProgress: (progressEvent) => {
           if (progressEvent.total) {

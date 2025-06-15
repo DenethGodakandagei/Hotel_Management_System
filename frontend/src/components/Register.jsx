@@ -4,6 +4,7 @@ import logo from "../assets/logo.svg";
 import { IoMdHome } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "../services/api";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -77,8 +78,12 @@ const Register = () => {
     }
     try {
       // Register the user
-      const userResponse = await axios.post(
-        "http://localhost:5000/api/auth/register",
+     // const userResponse = await axios.post(
+      //  "http://localhost:5000/api/auth/register",
+     //   userData
+    //  );
+       const userResponse = await api.post(
+        "/auth/register",
         userData
       );
 

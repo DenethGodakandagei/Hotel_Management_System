@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import api from "../../../services/api";
+
 
 const ViewRooms = () => {
   const [rooms, setRooms] = useState([]);
@@ -9,7 +11,8 @@ const ViewRooms = () => {
   // Fetch rooms data from the API
   const fetchRooms = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/room/");
+      //const response = await axios.get("http://localhost:5000/api/room/");
+       const response = await api.get("/room/");
       setRooms(response.data);
     } catch (error) {
       console.error("Error fetching rooms:", error);
@@ -31,7 +34,8 @@ const ViewRooms = () => {
   // Handle Delete Room
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/room/${id}`);
+      //await axios.delete(`http://localhost:5000/api/room/${id}`);
+       await api.delete(`/room/${id}`);
       fetchRooms(); // Re-fetch rooms after deletion
     } catch (error) {
       console.error("Error deleting room:", error);
@@ -54,7 +58,8 @@ const ViewRooms = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/room/${selectedRoom._id}`, selectedRoom);
+      //await axios.put(`http://localhost:5000/api/room/${selectedRoom._id}`, selectedRoom);
+       await api.put(`/room/${selectedRoom._id}`, selectedRoom);
       fetchRooms(); // Re-fetch rooms after updating
       closeModal();
     } catch (error) {

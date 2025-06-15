@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import DashboardNavigater from "../DashboardNavigater";
 import { useAuth } from "../../../context/AuthContext.js";
 import axios from "axios";
+import api from "../../../services/api.js";
 
 const AdminSettings = () => {
   const { user ,updateUser  } = useAuth(); // Get user from context but avoid using setUser
@@ -71,11 +72,8 @@ const AdminSettings = () => {
     if (error) return; // Don't allow save if there's an error
   
     try {
-      const response = await axios.put(
-        `http://localhost:5000/api/users/${user.id}`,
-        userData
-      );
-  
+    //  const response = await axios.put( `http://localhost:5000/api/users/${user.id}`, userData);
+   const response = await api.put( `/users/${user.id}`, userData);
       const updatedUser = response.data.data;
       setUserData(updatedUser);
       updateUser(updatedUser); // Ensure user state updates

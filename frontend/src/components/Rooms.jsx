@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "../services/api";
 
 const Rooms = () => {
   const [rooms, setRooms] = useState([]);
@@ -11,7 +12,8 @@ const Rooms = () => {
   // Fetch rooms from the backend
   const fetchRooms = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/room/");
+      //const response = await axios.get("http://localhost:5000/api/room/");
+        const response = await api.get("/room/");
       setRooms(response.data);
       setLoading(false);
     } catch (err) {

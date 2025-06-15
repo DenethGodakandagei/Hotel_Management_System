@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import { IoMdHome } from "react-icons/io";
 import axios from "axios";
+import api from "../../services/api";
 
 const StaffRegistration = () => {
     
@@ -75,10 +76,14 @@ const StaffRegistration = () => {
   
       try {
         //  register the user
-        const userResponse = await axios.post(
-          "http://localhost:5000/api/auth/register",
+        const userResponse = await api.post(
+          "/auth/register",
           userData
         );
+       //  const userResponse = await axios.post(
+        //  "http://localhost:5000/api/auth/register",
+       //   userData
+      //  );
   
         // Handle successful registration
         setSuccess("User registered successfully!");
@@ -91,7 +96,8 @@ const StaffRegistration = () => {
           };
   
           // Send the staff data to the backend
-          await axios.post("http://localhost:5000/api/staff", staffData);
+         // await axios.post("http://localhost:5000/api/staff", staffData);
+           await api.post("/api/staff", staffData);
   
           setSuccess("Staff registered successfully!");
           

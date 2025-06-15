@@ -12,7 +12,7 @@ import { FaArrowLeft , FaArrowRight  } from "react-icons/fa";
 import logo from "../assets/logo.svg";
 import { IoMdHome } from "react-icons/io";
 import toast from 'react-hot-toast';
-
+import api from "../services/api";
 
 // Set up moment localizer for calendar
 const localizer = momentLocalizer(moment);
@@ -40,7 +40,8 @@ const Roominfo = () => {
     if (room && room._id) {  // Ensure room and room._id are valid before proceeding
       const fetchReservations = async () => {
         try {
-          const response = await axios.get("http://localhost:5000/api/reservations");
+         // const response = await axios.get("http://localhost:5000/api/reservations");
+          const response = await api.get("/reservations");
           const data = response.data;
           
           // Filter reservations for the current room
@@ -129,7 +130,8 @@ const Roominfo = () => {
       };
 
       // Send reservation data to the backend
-      const response = await axios.post("http://localhost:5000/api/reservations", reservationData);
+      // const response = await axios.post("http://localhost:5000/api/reservations", reservationData);
+       const response = await api.post("/reservations", reservationData);
 
       if (response.status === 201) {
         toast.success("Reservation created successfully!");

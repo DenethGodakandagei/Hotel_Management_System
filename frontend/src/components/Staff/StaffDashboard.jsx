@@ -8,7 +8,7 @@ import ViewRooms from "../Admin/RoomManage/ViewRooms.jsx";
 import AllReservations from "../Admin/ReservationManage/AllReservations.jsx";
 import ViewMenu from "../Admin/MenuManage/ViewMenu.jsx";
 import AddRooms from "../Admin/RoomManage/AddRooms.jsx";
-
+import api from "../../services/api.js";
 
 const StaffDashboard = () => {
   const { user } = useAuth(); // Get the logged-in user from context
@@ -50,9 +50,8 @@ const StaffDashboard = () => {
     // Fetch staff role based on user ID
     const fetchStaffRole = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/staff/${user.id}`
-        );
+       // const response = await axios.get( `http://localhost:5000/api/staff/${user.id}` );
+       const response = await api.get( `/staff/${user.id}` );
         setStaffRole(response.data.role);
         setError("");
       } catch (err) {
