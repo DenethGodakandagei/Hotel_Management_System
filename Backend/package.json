@@ -5,9 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js",
-    "start": "node server.js",
-      "build": "echo \"No build needed for backend\""
+    "dev": "node init && nodemon server.js",
+    "start": "node init && node server.js",
+    "build": "node init && echo \"No build needed for backend\""
   },
   "keywords": [],
   "author": "",
